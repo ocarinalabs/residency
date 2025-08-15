@@ -9,11 +9,18 @@ import {
   BukalapakIcon,
   CarousellIcon,
   FinAccelIcon,
+  Pomelo,
+  SeventhSenseAI,
 } from "@/components/icons/startups";
 import {
   ReplyrAI,
   CleveAI,
+  DocuAsk,
+  ResidentImages,
+  StealthStartup,
+  NewellRoad,
 } from "@/components/icons/residents";
+import { StartupImages } from "@/components/icons/startups";
 
 type MarqueeItem = {
   link: string;
@@ -113,6 +120,21 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                       component: FinAccelIcon,
                       link: "http://finaccel.co/",
                       name: "Finaccel",
+                    },
+                    {
+                      component: Pomelo,
+                      link: "https://pomelofashion.com",
+                      name: "Pomelo",
+                    },
+                    {
+                      component: SeventhSenseAI,
+                      link: "https://seventhsense.ai/",
+                      name: "Seventh Sense",
+                    },
+                    {
+                      image: StartupImages.aerodyne,
+                      link: "https://aerodyne.group",
+                      name: "Aerodyne",
                     },
                     /*
                   { 
@@ -215,6 +237,31 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                       link: "https://cleve.ai",
                       name: "CleveAI",
                     },
+                    {
+                      component: DocuAsk,
+                      link: "https://docuask.ai",
+                      name: "DocuAsk",
+                    },
+                    {
+                      image: ResidentImages.bluebolt,
+                      link: "https://blueboltlabs.com",
+                      name: "Blue Bolt Labs",
+                    },
+                    {
+                      image: ResidentImages.easybuzz,
+                      link: "https://easybuzz.ai",
+                      name: "EasyBuzz",
+                    },
+                    {
+                      component: StealthStartup,
+                      link: "https://stealthstartup.com",
+                      name: "Stealth Startup",
+                    },
+                    {
+                      component: NewellRoad,
+                      link: "https://newellroad.com",
+                      name: "Newell Road",
+                    },
                   ] as MarqueeItem[]
                 ).map((item, index) => (
                   <a
@@ -231,7 +278,11 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="h-5 w-auto sm:h-6 md:h-7 object-contain"
+                        className={
+                          item.name === "Blue Bolt Labs" || item.name === "EasyBuzz"
+                            ? "h-10 w-auto sm:h-12 md:h-14 object-contain"
+                            : "h-5 w-auto sm:h-6 md:h-7 object-contain"
+                        }
                         loading="lazy"
                       />
                     )}

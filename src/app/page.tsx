@@ -35,7 +35,7 @@ export default function Home() {
       <AnimatedNavFramer />
       <Hero
         heading="AI Residency Registration"
-        description="AI Residency @ 500 Social House"
+        description="In the 500 Social House"
         buttons={{
           primary: { text: "Register Below", url: "#register" },
         }}

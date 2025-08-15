@@ -10,6 +10,10 @@ import {
   CarousellIcon,
   FinAccelIcon,
 } from "@/components/icons/startups";
+import {
+  ReplyrAI,
+  CleveAI,
+} from "@/components/icons/residents";
 
 type MarqueeItem = {
   link: string;
@@ -188,6 +192,46 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                         src={item.image}
                         alt={item.name}
                         className="h-6 w-auto sm:h-7 md:h-8 object-contain"
+                        loading="lazy"
+                      />
+                    )}
+                  </a>
+                ))}
+              </Marquee>
+            </BlurFade>
+            
+            {/* Technology Stack Marquee */}
+            <BlurFade delay={0.35}>
+              <Marquee direction="right" className="max-w-full sm:max-w-3xl md:max-w-4xl !mt-4 !sm:mt-6">
+                {(
+                  [
+                    {
+                      component: ReplyrAI,
+                      link: "https://replyr.ai",
+                      name: "ReplyrAI",
+                    },
+                    {
+                      component: CleveAI,
+                      link: "https://cleve.ai",
+                      name: "CleveAI",
+                    },
+                  ] as MarqueeItem[]
+                ).map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative h-full w-fit mx-3 sm:mx-4 md:mx-6 lg:mx-8 flex items-center justify-start hover:opacity-80 transition-opacity"
+                    aria-label={item.name}
+                  >
+                    {"component" in item ? (
+                      <item.component className="h-6 w-auto sm:h-7 md:h-8" />
+                    ) : (
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="h-5 w-auto sm:h-6 md:h-7 object-contain"
                         loading="lazy"
                       />
                     )}

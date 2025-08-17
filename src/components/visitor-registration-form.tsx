@@ -34,7 +34,9 @@ const formSchema = z.object({
     message: "IC/Passport number must be at least 6 characters.",
   }),
   phoneNumber: z.string().min(10, {
-    message: "Please enter a valid phone number.",
+    message: "Phone number must be at least 10 digits.",
+  }).regex(/^\d+$/, {
+    message: "Phone number must contain only numbers.",
   }),
   visitDate: z.string().min(1, {
     message: "Please select a visit date.",
@@ -73,7 +75,7 @@ export function VisitorRegistrationForm() {
       icPassport: "",
       phoneNumber: "",
       visitDate: "",
-      startTime: "09:00",
+      startTime: "10:00",
       vehicleNumber: "",
       reasonToVisit: "500 Social House @ AI Residency",
       selectedRoom: "",
@@ -186,9 +188,6 @@ export function VisitorRegistrationForm() {
                     disabled={isLoading}
                   />
                 </FormControl>
-                <FormDescription>
-                  Enter your full name as it appears on your ID
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -208,9 +207,6 @@ export function VisitorRegistrationForm() {
                     disabled={isLoading}
                   />
                 </FormControl>
-                <FormDescription>
-                  We&apos;ll send your visitor pass to this email
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -229,9 +225,6 @@ export function VisitorRegistrationForm() {
                     disabled={isLoading}
                   />
                 </FormControl>
-                <FormDescription>
-                  Your identification number for security verification
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -246,14 +239,18 @@ export function VisitorRegistrationForm() {
                 <FormControl>
                   <Input
                     type="tel"
-                    placeholder="+60123456789"
+                    placeholder="0123456789"
                     {...field}
+                    onChange={(e) => {
+                      // Only allow numbers
+                      const numbersOnly = e.target.value.replace(/\D/g, '');
+                      field.onChange(numbersOnly);
+                    }}
+                    pattern="[0-9]*"
+                    inputMode="numeric"
                     disabled={isLoading}
                   />
                 </FormControl>
-                <FormDescription>
-                  Include country code (e.g., +60 for Malaysia)
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -337,9 +334,6 @@ export function VisitorRegistrationForm() {
                     disabled={isLoading}
                   />
                 </FormControl>
-                <FormDescription>
-                  Enter your vehicle registration number if driving
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -358,9 +352,6 @@ export function VisitorRegistrationForm() {
                     disabled={isLoading}
                   />
                 </FormControl>
-                <FormDescription>
-                  Brief description of your visit purpose
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

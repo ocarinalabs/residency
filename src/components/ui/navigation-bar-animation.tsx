@@ -12,7 +12,10 @@ import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
 
 // Navigation items
-const navItems = [{ name: "Register", href: "#register" }];
+const navItems = [
+  { name: "Register", href: "#register" },
+  { name: "Pass", href: "/pass" },
+];
 
 const EXPAND_SCROLL_THRESHOLD = 80;
 

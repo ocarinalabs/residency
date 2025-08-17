@@ -19,8 +19,19 @@ interface Calendar24Props {
 
 export function Calendar24({ onDateTimeChange }: Calendar24Props) {
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>(undefined);
+  const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = React.useState<string>("09:00");
+
+  // Set default date on mount
+  React.useEffect(() => {
+    const today = new Date();
+    setDate(today);
+    if (onDateTimeChange) {
+      const formattedDate = today.toISOString().split("T")[0];
+      onDateTimeChange(formattedDate, startTime);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDateChange = (newDate: Date | undefined) => {
     setDate(newDate);
@@ -42,7 +53,7 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-3">
         <Label htmlFor="date" className="px-1">
-          Date
+          Date<span className="text-red-500 align-top text-xs">*</span>
         </Label>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>

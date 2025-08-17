@@ -170,67 +170,6 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                       link: "https://www.appboxo.com",
                       name: "Appboxo",
                     },
-                    /*
-                  { 
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F7e26878f6ccb431692209fa86433f1c7?format=webp&width=2000", 
-                    link: "http://seppure.com/", 
-                    name: "Seppure"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F544f78d88c1f4fa5bd0ce164a197c714?width=93",
-                    link: "http://pandai.org/",
-                    name: "Pandai"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F411c00eb2f6348df88030862f8a4f19a?width=93",
-                    link: "http://pomelofashion.com/",
-                    name: "Pomelo"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F1ead56ccef8446a483900bc843e6a91c?width=93",
-                    link: "https://www.seventhsense.ai",
-                    name: "Seventh Sense AI"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F9a358147ed49408bbee2f29134f9abc3?format=webp&width=2000",
-                    link: "http://aerodyne.group/",
-                    name: "Aerodyne"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F8ad325791973427fa03bde907c783d6b?width=93",
-                    link: "http://www.investax.io/",
-                    name: "Investax"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2Ff8614e698b2b4182895ee8b549eb53c6?format=webp&width=2000",
-                    link: "http://www.alodokter.com/",
-                    name: "Alodokter"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F2ea318d1b8f24bfcab78f06336d521dc?width=93",
-                    link: "http://stockbit.com/",
-                    name: "Stockbit"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F963f535e60c340fbbf84dd2e939c6352?width=93",
-                    link: "http://www.homage.sg/",
-                    name: "Homage"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F385e9ad973d244adbc3b9621caea5ea2?format=webp&width=2000",
-                    link: "http://www.99.co/",
-                    name: "99 Group"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2F101e87d7c3eb40eabcc4b60738b76647?format=webp&width=2000",
-                    link: "http://bukukas.co.id/",
-                    name: "Lummo"
-                  },
-                  {
-                    image: "https://cdn.builder.io/api/v1/image/assets%2F26187a5473654c43ab7a1b7a54514e5c%2Fcd2fe8f98ea44b2f9f2cd34007ce4db6?width=93",
-                    link: "http://appboxo.com/",
-                    name: "Appboxo"
-                  }, */
                   ] as MarqueeItem[]
                 ).map((item, index) => (
                   <a
@@ -255,10 +194,13 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                 ))}
               </Marquee>
             </BlurFade>
-            
+
             {/* Technology Stack Marquee */}
             <BlurFade delay={0.35}>
-              <Marquee direction="right" className="max-w-full sm:max-w-3xl md:max-w-4xl !mt-4 !sm:mt-6">
+              <Marquee
+                direction="right"
+                className="max-w-full sm:max-w-3xl md:max-w-4xl !mt-4 !sm:mt-6"
+              >
                 {(
                   [
                     {
@@ -313,7 +255,8 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                         src={item.image}
                         alt={item.name}
                         className={
-                          item.name === "Blue Bolt Labs" || item.name === "EasyBuzz"
+                          item.name === "Blue Bolt Labs" ||
+                          item.name === "EasyBuzz"
                             ? "h-10 w-auto sm:h-12 md:h-14 object-contain"
                             : "h-5 w-auto sm:h-6 md:h-7 object-contain"
                         }

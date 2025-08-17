@@ -11,6 +11,10 @@ import {
   FinAccelIcon,
   Pomelo,
   SeventhSenseAI,
+  Alodokter,
+  Homage,
+  NinetyNineCo,
+  AppBoxo,
 } from "@/components/icons/startups";
 import {
   ReplyrAI,
@@ -135,6 +139,36 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                       image: StartupImages.aerodyne,
                       link: "https://aerodyne.group",
                       name: "Aerodyne",
+                    },
+                    {
+                      image: StartupImages.investax,
+                      link: "https://investax.io",
+                      name: "Investax",
+                    },
+                    {
+                      component: Alodokter,
+                      link: "https://alodokter.com",
+                      name: "Alodokter",
+                    },
+                    {
+                      image: StartupImages.stockbit,
+                      link: "https://stockbit.com",
+                      name: "Stockbit",
+                    },
+                    {
+                      component: Homage,
+                      link: "https://www.homage.com.my",
+                      name: "Homage",
+                    },
+                    {
+                      component: NinetyNineCo,
+                      link: "https://www.99.co",
+                      name: "99 Group",
+                    },
+                    {
+                      component: AppBoxo,
+                      link: "https://www.appboxo.com",
+                      name: "Appboxo",
                     },
                     /*
                   { 

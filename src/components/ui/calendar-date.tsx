@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ChevronDownIcon } from "lucide-react";
+import { addDays } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -81,6 +82,28 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
             />
           </PopoverContent>
         </Popover>
+        {/* Date presets */}
+        <div className="flex gap-2">
+          {[
+            { label: "Today", value: 0 },
+            { label: "Tomorrow", value: 1 },
+            { label: "In 3 days", value: 3 },
+          ].map((preset) => (
+            <Button
+              key={preset.value}
+              type="button"
+              variant="outline"
+              size="sm"
+              className="flex-1"
+              onClick={() => {
+                const newDate = addDays(new Date(), preset.value);
+                handleDateChange(newDate);
+              }}
+            >
+              {preset.label}
+            </Button>
+          ))}
+        </div>
       </div>
       <div className="flex gap-4">
         <div className="flex flex-col gap-3">

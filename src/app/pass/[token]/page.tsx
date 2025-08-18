@@ -8,20 +8,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  Loader2,
-  DoorOpen,
-  DoorClosed,
-  CheckCircle2,
-  Info,
-  MapPin,
-} from "lucide-react";
+import { Loader2, CheckCircle2, Info, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import CalendarIcon from "@/components/icons/calendar-icon";
-import QrIcon from "@/components/icons/qr-icon";
 import ClockIcon from "@/components/icons/clock-icon";
 import UserIcon from "@/components/icons/user-icon";
 import AccessIcon from "@/components/icons/access-icon";
+import DoorEntryIcon from "@/components/icons/door-entry-icon";
+import DoorExitIcon from "@/components/icons/door-exit-icon";
+import { BGPattern } from "@/components/ui/bg-pattern";
+import { useTheme } from "next-themes";
 
 interface DoorControl {
   name: string;
@@ -39,6 +35,8 @@ export default function PassPage({
   const [doorControls, setDoorControls] = useState<DoorControl[]>([]);
   const [visitorInfo, setVisitorInfo] = useState<Record<string, string>>({});
   const [doorLoading, setDoorLoading] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
 
   const passUrl = `https://nuveq.cloud/modules/visitors/visitor_pass.php?keyToken=${resolvedParams.token}`;
 
@@ -46,6 +44,10 @@ export default function PassPage({
     fetchPassData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolvedParams.token]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const fetchPassData = async () => {
     setLoading(true);
@@ -69,6 +71,19 @@ export default function PassPage({
   };
 
   const parseData = (html: string) => {
+    // Function to simplify door names
+    const simplifyDoorName = (name: string): string => {
+      // Remove parentheses and their contents for main door
+      if (name.toLowerCase().includes("main door")) {
+        return "Main Door";
+      }
+      // Rename emergency doors
+      if (name.toLowerCase().includes("emergency door")) {
+        return "Pantry Door (Emergency Exit)";
+      }
+      return name;
+    };
+
     // Extract door controls
     const doors: DoorControl[] = [];
     const doorSections = html.split("Door Name:");
@@ -83,7 +98,7 @@ export default function PassPage({
 
         if (nameMatch && enterMatch && exitMatch) {
           doors.push({
-            name: nameMatch[1].trim(),
+            name: simplifyDoorName(nameMatch[1].trim()),
             enterUrl: enterMatch[1],
             exitUrl: exitMatch[1],
           });
@@ -311,7 +326,9 @@ export default function PassPage({
         <div className="flex items-center gap-2">
           <CheckCircle2 className="h-4 w-4" />
           <span>
-            Door {action === "enter" ? "opened" : "unlocked"} for {action}
+            {action === "enter"
+              ? "Entry access granted"
+              : "Exit access granted"}
           </span>
         </div>
       );
@@ -327,118 +344,221 @@ export default function PassPage({
     }
   };
 
+  // Avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center space-y-4">
+      <div className="relative min-h-screen bg-background flex items-center justify-center">
+        {/* Background pattern */}
+        <BGPattern
+          variant="grid"
+          mask="fade-edges"
+          size={40}
+          fill={
+            theme === "dark"
+              ? "rgba(255, 255, 255, 0.15)"
+              : theme === "light"
+                ? "rgba(0, 0, 0, 0.12)"
+                : "rgba(128, 128, 128, 0.1)"
+          }
+          className="fixed inset-0 z-0"
+        />
+        <div className="relative flex flex-col items-center space-y-4 z-10">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">Loading visitor pass...</p>
+          <p className="text-muted-foreground">Loading residency pass...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="relative min-h-screen bg-background">
+      {/* Background pattern */}
+      <BGPattern
+        variant="grid"
+        mask="fade-edges"
+        size={40}
+        fill={
+          theme === "dark"
+            ? "rgba(255, 255, 255, 0.15)"
+            : theme === "light"
+              ? "rgba(0, 0, 0, 0.12)"
+              : "rgba(128, 128, 128, 0.1)"
+        }
+        className="fixed inset-0 z-0"
+      />
+      <div className="relative max-w-4xl mx-auto p-6 space-y-6 z-10">
         {/* Header */}
         <div className="text-center py-8">
-          <h1 className="text-4xl font-bold mb-2">Digital Visitor Pass</h1>
-          <p className="text-muted-foreground">
-            Your access pass for today&apos;s visit
-          </p>
+          <h1 className="text-4xl font-bold">AI Residency Pass</h1>
         </div>
 
-        {/* Visitor Info Card */}
+        {/* Door Controls Card */}
+        {doorControls.length > 0 && (
+          <Card className="p-6 ">
+            <div className="flex items-center gap-3 mb-4">
+              <AccessIcon className="h-5 w-5 text-primary" />
+              <h2 className="text-xl font-semibold">Door Controls</h2>
+            </div>
+
+            <div className="space-y-4">
+              {[...doorControls].reverse().map((door) => (
+                <div key={door.name} className="space-y-2">
+                  <p className="font-medium">{door.name}</p>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() =>
+                        triggerDoor(door.enterUrl, door.name, "enter")
+                      }
+                      disabled={doorLoading === `${door.name}-enter`}
+                      className="flex-1 h-12"
+                      size="lg"
+                    >
+                      {doorLoading === `${door.name}-enter` ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <DoorEntryIcon className="mr-2 h-4 w-4" />
+                          Enter
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        triggerDoor(door.exitUrl, door.name, "exit")
+                      }
+                      disabled={doorLoading === `${door.name}-exit`}
+                      variant="outline"
+                      className="flex-1 h-12"
+                      size="lg"
+                    >
+                      {doorLoading === `${door.name}-exit` ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <DoorExitIcon className="mr-2 h-4 w-4" />
+                          Exit
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
+        {/* Resident Info Card */}
         {visitorInfo.name && (
           <Card className="p-6 ">
             <div className="flex items-center gap-3 mb-4">
               <UserIcon className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-semibold">Visitor Information</h2>
+              <h2 className="text-xl font-semibold">Resident Information</h2>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <div>
-                  <p className="text-sm text-muted-foreground">Full Name</p>
-                  <p className="font-medium">{visitorInfo.name}</p>
+            <div className="flex gap-6">
+              {/* Left side - Resident details */}
+              <div className="flex-1 grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Full Name</p>
+                    <p className="font-medium">{visitorInfo.name}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">
+                      IC/Passport Number
+                    </p>
+                    <p className="font-medium">{visitorInfo.icPassport}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Email</p>
+                    <p className="font-medium">{visitorInfo.email}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">IC/Passport</p>
-                  <p className="font-medium">{visitorInfo.icPassport}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">{visitorInfo.email}</p>
+
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <p className="font-medium">{visitorInfo.phone}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Company</p>
+                    <div className="flex items-center gap-1">
+                      <p className="font-medium">
+                        {visitorInfo.company || "N/A"}
+                      </p>
+                      {visitorInfo.company && (
+                        <a
+                          href="https://maps.app.goo.gl/NTVKNHo7HmUtAhvZ8"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex"
+                        >
+                          <MapPin className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Approved by</p>
+                    <div className="flex items-center gap-1">
+                      <p className="font-medium">
+                        {visitorInfo.inviterName || "Host"}
+                      </p>
+                      {(visitorInfo.inviterPosition ||
+                        visitorInfo.inviterEmail ||
+                        visitorInfo.inviterPhone) && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-5 w-5 p-0 hover:bg-transparent"
+                            >
+                              <Info className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="space-y-1">
+                              {visitorInfo.inviterPosition && (
+                                <p className="text-sm">
+                                  {visitorInfo.inviterPosition}
+                                </p>
+                              )}
+                              {visitorInfo.inviterEmail && (
+                                <p className="text-sm">
+                                  {visitorInfo.inviterEmail}
+                                </p>
+                              )}
+                              {visitorInfo.inviterPhone && (
+                                <p className="text-sm">
+                                  {visitorInfo.inviterPhone}
+                                </p>
+                              )}
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <div>
-                  <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium">{visitorInfo.phone}</p>
+              {/* Right side - QR Code */}
+              {visitorInfo.qrCode && (
+                <div className="flex flex-col items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={visitorInfo.qrCode}
+                    alt="Resident QR Code"
+                    className="rounded-lg shadow-lg"
+                    style={{ maxWidth: "180px" }}
+                  />
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Company</p>
-                  <div className="flex items-center gap-1">
-                    <p className="font-medium">
-                      {visitorInfo.company || "N/A"}
-                    </p>
-                    {visitorInfo.company && (
-                      <a
-                        href="https://maps.app.goo.gl/NTVKNHo7HmUtAhvZ8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex"
-                      >
-                        <MapPin className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Approved by</p>
-                  <div className="flex items-center gap-1">
-                    <p className="font-medium">
-                      {visitorInfo.inviterName || "Host"}
-                    </p>
-                    {(visitorInfo.inviterPosition ||
-                      visitorInfo.inviterEmail ||
-                      visitorInfo.inviterPhone) && (
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-5 w-5 p-0 hover:bg-transparent"
-                          >
-                            <Info className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <div className="space-y-1">
-                            {visitorInfo.inviterPosition && (
-                              <p className="text-sm">
-                                {visitorInfo.inviterPosition}
-                              </p>
-                            )}
-                            {visitorInfo.inviterEmail && (
-                              <p className="text-sm">
-                                {visitorInfo.inviterEmail}
-                              </p>
-                            )}
-                            {visitorInfo.inviterPhone && (
-                              <p className="text-sm">
-                                {visitorInfo.inviterPhone}
-                              </p>
-                            )}
-                          </div>
-                        </TooltipContent>
-                      </Tooltip>
-                    )}
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
 
             {/* Visit Schedule */}
@@ -453,81 +573,6 @@ export default function PassPage({
                   {visitorInfo.startTime} - {visitorInfo.endTime}
                 </span>
               </div>
-            </div>
-          </Card>
-        )}
-
-        {/* Door Controls Card */}
-        {doorControls.length > 0 && (
-          <Card className="p-6 ">
-            <div className="flex items-center gap-3 mb-4">
-              <AccessIcon className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-semibold">Access Controls</h2>
-            </div>
-
-            <div className="space-y-4">
-              {doorControls.map((door) => (
-                <div key={door.name} className="space-y-2">
-                  <p className="font-medium">{door.name}</p>
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={() =>
-                        triggerDoor(door.enterUrl, door.name, "enter")
-                      }
-                      disabled={doorLoading === `${door.name}-enter`}
-                      className="flex-1"
-                    >
-                      {doorLoading === `${door.name}-enter` ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <>
-                          <DoorOpen className="mr-2 h-4 w-4" />
-                          Open for Entry
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        triggerDoor(door.exitUrl, door.name, "exit")
-                      }
-                      disabled={doorLoading === `${door.name}-exit`}
-                      variant="outline"
-                      className="flex-1"
-                    >
-                      {doorLoading === `${door.name}-exit` ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <>
-                          <DoorClosed className="mr-2 h-4 w-4" />
-                          Open for Exit
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
-        )}
-
-        {/* QR Code Card */}
-        {visitorInfo.qrCode && (
-          <Card className="p-6 ">
-            <div className="flex items-center gap-3 mb-4">
-              <QrIcon className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-semibold">QR Code</h2>
-            </div>
-            <div className="flex flex-col items-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={visitorInfo.qrCode}
-                alt="Visitor QR Code"
-                className="rounded-lg shadow-lg"
-                style={{ maxWidth: "200px" }}
-              />
-              <p className="text-sm text-muted-foreground mt-3">
-                Present this code at the entrance
-              </p>
             </div>
           </Card>
         )}

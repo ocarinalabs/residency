@@ -27,7 +27,7 @@ const formSchema = z.object({
     message: "Please enter a valid email address.",
   }),
   icPassport: z.string().min(6, {
-    message: "IC/Passport must be at least 6 characters.",
+    message: "IC/Passport Number must be at least 6 characters.",
   }),
   phoneNumber: z
     .string()
@@ -77,7 +77,7 @@ export function VisitorRegistrationForm() {
       visitDate: "",
       startTime: "10:00",
       vehicleNumber: "",
-      reasonToVisit: "500 Social House @ AI Residency",
+      reasonToVisit: "AI Residency @ 500 Social House",
       selectedRoom: "",
     },
   });
@@ -93,10 +93,7 @@ export function VisitorRegistrationForm() {
         form.setValue("icPassport", parsed.icPassport || "");
         form.setValue("phoneNumber", parsed.phoneNumber || "");
         form.setValue("vehicleNumber", parsed.vehicleNumber || "");
-        form.setValue(
-          "reasonToVisit",
-          parsed.reasonToVisit || "500 Social House @ AI Residency"
-        );
+        form.setValue("reasonToVisit", "AI Residency @ 500 Social House");
         if (parsed.selectedRoom) {
           form.setValue("selectedRoom", parsed.selectedRoom);
         }
@@ -137,7 +134,6 @@ export function VisitorRegistrationForm() {
         icPassport: values.icPassport,
         phoneNumber: values.phoneNumber,
         vehicleNumber: values.vehicleNumber,
-        reasonToVisit: values.reasonToVisit,
         selectedRoom: values.selectedRoom,
       })
     );
@@ -191,11 +187,8 @@ export function VisitorRegistrationForm() {
         <>
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-center">
-              Visitor Registration
+              AI Residency Access
             </h2>
-            <p className="text-sm text-muted-foreground text-center mt-2">
-              Register to receive your digital visitor pass
-            </p>
           </div>
 
           <Form {...form}>
@@ -249,7 +242,7 @@ export function VisitorRegistrationForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      IC/Passport
+                      IC/Passport Number
                       <span className="text-red-500 align-top text-xs">*</span>
                     </FormLabel>
                     <FormControl>
@@ -296,9 +289,6 @@ export function VisitorRegistrationForm() {
               {/* Visit Date */}
               <div className="space-y-2">
                 <Calendar24 onDateTimeChange={handleDateTimeChange} />
-                <p className="text-sm text-muted-foreground">
-                  Your visit ends at 11:59 PM on the selected date
-                </p>
                 {(form.formState.errors.visitDate ||
                   form.formState.errors.startTime) && (
                   <p className="text-sm text-destructive">
@@ -374,7 +364,7 @@ export function VisitorRegistrationForm() {
                       <Input
                         placeholder="AI Residency @ 500 Social House"
                         {...field}
-                        disabled={isLoading}
+                        disabled={true}
                       />
                     </FormControl>
                     <FormMessage />
@@ -389,14 +379,14 @@ export function VisitorRegistrationForm() {
                     Registering...
                   </>
                 ) : (
-                  "Register for Visitor Pass"
+                  "Register"
                 )}
               </Button>
             </form>
           </Form>
 
           {/* Toggle to show iframe */}
-          <div className="mt-4 flex items-center space-x-2">
+          {/* <div className="mt-4 flex items-center space-x-2">
             <input
               type="checkbox"
               id="show-iframe"
@@ -410,7 +400,7 @@ export function VisitorRegistrationForm() {
             >
               Show submission iframe (for debugging)
             </label>
-          </div>
+          </div> */}
 
           {/* Hidden form that submits to Nuveq */}
           <HiddenNuveqForm

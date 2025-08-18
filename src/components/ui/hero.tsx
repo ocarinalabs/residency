@@ -30,7 +30,12 @@ type MarqueeItem = {
   link: string;
   name: string;
 } & (
-  | { component: React.ComponentType<{ className?: string }> }
+  | {
+      component: React.ComponentType<{
+        className?: string;
+        style?: React.CSSProperties;
+      }>;
+    }
   | { image: string }
 );
 
@@ -171,27 +176,84 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                       name: "Appboxo",
                     },
                   ] as MarqueeItem[]
-                ).map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative h-full w-fit mx-3 sm:mx-4 md:mx-6 lg:mx-8 flex items-center justify-start hover:opacity-80 transition-opacity"
-                    aria-label={item.name}
-                  >
-                    {"component" in item ? (
-                      <item.component className="h-8 w-auto sm:h-10 md:h-12" />
-                    ) : (
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="h-6 w-auto sm:h-7 md:h-8 object-contain"
-                        loading="lazy"
-                      />
-                    )}
-                  </a>
-                ))}
+                ).map((item, index) => {
+                  // Logos that should be way bigger than everything else
+                  const wayBiggerLogos = [
+                    "Carsome",
+                    "Pomelo",
+                    "Seventh Sense AI",
+                    "Aerodyne",
+                  ];
+                  // List of logos that should be bigger
+                  const biggerLogos = ["Grab", "Carousell"];
+                  // Logo that should be bigger with upward adjustment
+                  const stockbitAdjust = item.name === "Stockbit";
+                  // Logo that should be smaller
+                  const smallerLogos = ["Alodokter"];
+
+                  const isWayBigger = wayBiggerLogos.includes(item.name);
+                  const isBigger = biggerLogos.includes(item.name);
+                  const isSmaller = smallerLogos.includes(item.name);
+
+                  let className;
+                  let additionalStyle = {};
+
+                  if (isWayBigger) {
+                    // Way bigger for Carsome, Pomelo, Seventh Sense, Aerodyne
+                    className =
+                      "component" in item
+                        ? "h-16 w-auto sm:h-20 md:h-24"
+                        : "h-14 w-auto sm:h-18 md:h-20 object-contain";
+                  } else if (stockbitAdjust) {
+                    // Stockbit - bigger with upward adjustment
+                    className = "h-10 w-auto sm:h-12 md:h-14 object-contain";
+                    additionalStyle = { transform: "translateY(-4px)" };
+                  } else if (isBigger) {
+                    // Bigger for other logos
+                    className =
+                      "component" in item
+                        ? "h-12 w-auto sm:h-14 md:h-16"
+                        : "h-10 w-auto sm:h-12 md:h-14 object-contain";
+                  } else if (isSmaller) {
+                    // Smaller for Alodokter
+                    className =
+                      "component" in item
+                        ? "h-6 w-auto sm:h-7 md:h-8"
+                        : "h-5 w-auto sm:h-6 md:h-7 object-contain";
+                  } else {
+                    // Default size
+                    className =
+                      "component" in item
+                        ? "h-8 w-auto sm:h-10 md:h-12"
+                        : "h-6 w-auto sm:h-7 md:h-8 object-contain";
+                  }
+
+                  return (
+                    <a
+                      key={index}
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative h-full w-fit mx-3 sm:mx-4 md:mx-6 lg:mx-8 flex items-center justify-start hover:opacity-80 transition-opacity"
+                      aria-label={item.name}
+                    >
+                      {"component" in item ? (
+                        <item.component
+                          className={className}
+                          style={additionalStyle}
+                        />
+                      ) : (
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className={className}
+                          style={additionalStyle}
+                          loading="lazy"
+                        />
+                      )}
+                    </a>
+                  );
+                })}
               </Marquee>
             </BlurFade>
 
@@ -230,7 +292,7 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                     },
                     {
                       component: StealthStartup,
-                      link: "https://stealthstartup.com",
+                      link: "https://stealth-startups.com",
                       name: "Stealth Startup",
                     },
                     {

@@ -7,12 +7,16 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { BGPattern } from "@/components/ui/bg-pattern";
+import { useTheme } from "next-themes";
 
 export default function VisitorPassPage() {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
 
   // Detect screen size
   useEffect(() => {
@@ -28,6 +32,10 @@ export default function VisitorPassPage() {
 
     // Cleanup
     return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   const extractToken = (input: string): string | null => {
@@ -58,23 +66,36 @@ export default function VisitorPassPage() {
       router.push(`/pass/${token}`);
     } else {
       setError(
-        "Invalid link or token. Please paste the complete link from your email."
+        'Invalid link. Please copy the complete link from the "ACCESS USING WEB APPLICATION" button in your email.'
       );
     }
   };
 
+  // Avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl space-y-6">
+    <div className="relative min-h-screen bg-background flex items-center justify-center p-4">
+      {/* Background pattern */}
+      <BGPattern
+        variant="grid"
+        mask="fade-edges"
+        size={40}
+        fill={
+          theme === "dark"
+            ? "rgba(255, 255, 255, 0.15)"
+            : theme === "light"
+              ? "rgba(0, 0, 0, 0.12)"
+              : "rgba(128, 128, 128, 0.1)"
+        }
+        className="fixed inset-0 z-0"
+      />
+      <div className="relative w-full max-w-2xl space-y-6 z-10">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-2">
-            Enter Your Visitor Pass Link
-          </h1>
-          <p className="text-muted-foreground">
-            Paste the visitor pass link from your email to access your digital
-            pass
-          </p>
+          <h1 className="text-3xl font-bold">Access Your Pass</h1>
         </div>
 
         {/* Input Form */}
@@ -82,12 +103,12 @@ export default function VisitorPassPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="link" className="text-sm font-medium mb-3 block">
-                Visitor Pass Link
+                Link from Email
               </label>
               <Input
                 id="link"
                 type="text"
-                placeholder="https://nuveq.cloud/modules/visitors/visitor_pass.php?keyToken=..."
+                placeholder="Paste the link copied from the purple button in your email..."
                 value={input}
                 onChange={(e) => {
                   setInput(e.target.value);
@@ -98,7 +119,7 @@ export default function VisitorPassPage() {
               {error && <p className="text-sm text-red-500">{error}</p>}
             </div>
             <Button type="submit" className="w-full" size="lg">
-              View Pass
+              Continue
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </form>
@@ -117,13 +138,15 @@ export default function VisitorPassPage() {
               <div className="space-y-1">
                 <span className="font-semibold text-primary">Step 1</span>
                 <p className="text-sm text-muted-foreground">
-                  Open your email and find the visitor pass button
+                  Open the email titled{" "}
+                  <strong>&quot;Visitor Access - Remote Link&quot;</strong> from
+                  noreply@nuveq.net
                 </p>
               </div>
               <div className="relative w-full aspect-video bg-muted rounded-lg overflow-hidden">
                 <Image
                   src={isMobile ? "/email-3.webp" : "/email.webp"}
-                  alt="Email with visitor pass button"
+                  alt="Visitor Access email with purple button"
                   fill
                   className="object-contain"
                   priority
@@ -136,9 +159,19 @@ export default function VisitorPassPage() {
               <div className="space-y-1">
                 <span className="font-semibold text-primary">Step 2</span>
                 <p className="text-sm text-muted-foreground">
-                  {isMobile
-                    ? "Long press the button and select 'Copy Link'"
-                    : "Right-click the button and select 'Copy Link'"}
+                  {isMobile ? (
+                    <>
+                      Long press the{" "}
+                      <strong>&quot;ACCESS USING WEB APPLICATION&quot;</strong>{" "}
+                      button and select <strong>&quot;Copy Link&quot;</strong>
+                    </>
+                  ) : (
+                    <>
+                      Right-click the{" "}
+                      <strong>&quot;ACCESS USING WEB APPLICATION&quot;</strong>{" "}
+                      button and select <strong>&quot;Copy Link&quot;</strong>
+                    </>
+                  )}
                 </p>
               </div>
               <div className="relative w-full aspect-video bg-muted rounded-lg overflow-hidden">
@@ -146,8 +179,8 @@ export default function VisitorPassPage() {
                   src={isMobile ? "/email-4.webp" : "/email-2.webp"}
                   alt={
                     isMobile
-                      ? "Long press to copy link on mobile"
-                      : "Right-click to copy link on desktop"
+                      ? "Long press menu to copy link"
+                      : "Right-click menu to copy link"
                   }
                   fill
                   className="object-contain"
@@ -160,7 +193,8 @@ export default function VisitorPassPage() {
               <div className="space-y-1">
                 <span className="font-semibold text-primary">Step 3</span>
                 <p className="text-sm text-muted-foreground">
-                  Paste the copied link in the field above
+                  Paste the link in the field above and click{" "}
+                  <strong>&quot;Continue&quot;</strong>
                 </p>
               </div>
             </div>

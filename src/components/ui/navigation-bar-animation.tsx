@@ -157,6 +157,16 @@ export function AnimatedNavFramer() {
               {item.name}
             </motion.a>
           ))}
+          <motion.a
+            href="https://faw.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            variants={itemVariants}
+            onClick={(e) => e.stopPropagation()}
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-1 sm:px-2 py-1 font-sans"
+          >
+            Faw
+          </motion.a>
           <motion.div variants={itemVariants}>
             <ModeToggle />
           </motion.div>

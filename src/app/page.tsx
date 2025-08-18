@@ -28,16 +28,21 @@ export default function Home() {
         mask="fade-edges"
         size={40}
         fill={
-          theme === "dark" ? "rgba(255, 255, 255, 0.03)" : "rgba(0, 0, 0, 0.03)"
+          theme === "dark"
+            ? "rgba(255, 255, 255, 0.15)"
+            : theme === "light"
+              ? "rgba(0, 0, 0, 0.12)"
+              : "rgba(128, 128, 128, 0.1)"
         }
-        className="fixed inset-0"
+        className="fixed inset-0 z-0"
       />
       <AnimatedNavFramer />
       <Hero
         heading="AI Residency Registration"
         description="In the 500 Social House"
         buttons={{
-          primary: { text: "Register Below", url: "#register" },
+          primary: { text: "Register", url: "#register" },
+          secondary: { text: "Access Pass", url: "/pass" },
         }}
       />
 

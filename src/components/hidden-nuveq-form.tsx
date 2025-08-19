@@ -15,12 +15,14 @@ interface HiddenNuveqFormProps {
   };
   onComplete?: () => void;
   visible?: boolean;
+  debug?: boolean;
 }
 
 export function HiddenNuveqForm({
   formData,
   onComplete,
   visible = false,
+  debug = false,
 }: HiddenNuveqFormProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
@@ -95,29 +97,33 @@ export function HiddenNuveqForm({
 
     console.log("📝 Iframe loaded with reCAPTCHA form");
 
-    // Check for success
-    const checkInterval = setInterval(() => {
-      try {
-        const bodyText = iframeDoc.body?.innerText || "";
-        if (bodyText.includes("Thank you!")) {
-          console.log("✅ Success detected!");
+    // Check for success (only in production mode)
+    if (!debug) {
+      const checkInterval = setInterval(() => {
+        try {
+          const bodyText = iframeDoc.body?.innerText || "";
+          if (bodyText.includes("Thank you!")) {
+            console.log("✅ Success detected!");
+            clearInterval(checkInterval);
+            onComplete?.();
+          }
+        } catch {
+          console.log("🔒 Cross-origin - form submitted");
           clearInterval(checkInterval);
-          onComplete?.();
         }
-      } catch {
-        console.log("🔒 Cross-origin - form submitted");
-        clearInterval(checkInterval);
-      }
-    }, 1000);
+      }, 1000);
 
-    return () => clearInterval(checkInterval);
-  }, [formData, onComplete, recaptchaKey]);
+      return () => clearInterval(checkInterval);
+    } else {
+      console.log("🐛 DEBUG MODE: Automatic success detection disabled");
+    }
+  }, [formData, onComplete, recaptchaKey, debug]);
 
   if (!formData) return null;
 
   return (
     <>
-      {visible && (
+      {(visible || debug) && (
         <div style={{ marginTop: "16px" }}>
           <p style={{ fontSize: "14px", color: "#666", marginBottom: "8px" }}>
             📡 Nuveq Response Frame (below shows what Nuveq returns):
@@ -130,7 +136,7 @@ export function HiddenNuveqForm({
         ref={iframeRef}
         name="hiddenFrame"
         style={
-          visible
+          visible || debug
             ? {
                 width: "100%",
                 height: "400px",

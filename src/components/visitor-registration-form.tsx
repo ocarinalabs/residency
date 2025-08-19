@@ -19,6 +19,9 @@ import { useRouter } from "next/navigation";
 import { Calendar24 } from "@/components/ui/calendar-date";
 import { HiddenNuveqForm } from "./hidden-nuveq-form";
 
+// DEBUG FLAG: Set to true to disable automatic transitions and show debugging controls
+const DEBUG = false;
+
 const formSchema = z.object({
   fullName: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -65,7 +68,7 @@ export function VisitorRegistrationForm() {
     reasonToVisit: string;
     selectedRoom?: string;
   } | null>(null);
-  const [showIframe, setShowIframe] = useState(false);
+  const [showIframe, setShowIframe] = useState(DEBUG);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -156,15 +159,19 @@ export function VisitorRegistrationForm() {
     setSubmitData(submitPayload);
 
     // The form will submit in the background
-    // We'll show loading for a reasonable time
-    setTimeout(() => {
-      console.log("⏱️ Timer complete, showing success message");
-      setIsLoading(false);
-      setIsSubmitted(true);
-      // Clear form data after submission
-      setSubmitData(null);
-      setShowIframe(false);
-    }, 3000);
+    if (!DEBUG) {
+      // Production mode: auto-progress after 3 seconds
+      setTimeout(() => {
+        console.log("⏱️ Timer complete, showing success message");
+        setIsLoading(false);
+        setIsSubmitted(true);
+        // Clear form data after submission
+        setSubmitData(null);
+        setShowIframe(false);
+      }, 3000);
+    } else {
+      console.log("🐛 DEBUG MODE: Auto-progression disabled");
+    }
   }
 
   return (
@@ -385,28 +392,31 @@ export function VisitorRegistrationForm() {
             </form>
           </Form>
 
-          {/* Toggle to show iframe */}
-          {/* <div className="mt-4 flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="show-iframe"
-              checked={showIframe}
-              onChange={(e) => setShowIframe(e.target.checked)}
-              className="h-4 w-4"
-            />
-            <label
-              htmlFor="show-iframe"
-              className="text-sm text-muted-foreground"
-            >
-              Show submission iframe (for debugging)
-            </label>
-          </div> */}
+          {/* Toggle to show iframe - only visible in DEBUG mode */}
+          {DEBUG && (
+            <div className="mt-4 flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="show-iframe"
+                checked={showIframe}
+                onChange={(e) => setShowIframe(e.target.checked)}
+                className="h-4 w-4"
+              />
+              <label
+                htmlFor="show-iframe"
+                className="text-sm text-muted-foreground"
+              >
+                Show submission iframe (DEBUG MODE)
+              </label>
+            </div>
+          )}
 
           {/* Hidden form that submits to Nuveq */}
           <HiddenNuveqForm
             formData={submitData || undefined}
             onComplete={handleFormComplete}
             visible={showIframe}
+            debug={DEBUG}
           />
         </>
       )}

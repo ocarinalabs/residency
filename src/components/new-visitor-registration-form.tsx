@@ -20,7 +20,7 @@ import { Calendar24 } from "@/components/ui/calendar-date";
 import { NewHiddenNuveqForm } from "./new-hidden-nuveq-form";
 
 // DEBUG FLAG: Set to true to disable automatic transitions and show debugging controls
-const DEBUG = true;
+const DEBUG = false;
 
 const formSchema = z.object({
   fullName: z.string().min(2, {

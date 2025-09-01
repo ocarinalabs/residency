@@ -17,7 +17,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Loader2, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Calendar24 } from "@/components/ui/calendar-date";
-import { NewHiddenNuveqForm } from "./new-hidden-nuveq-form";
+import { HiddenNuveqForm } from "./hidden-nuveq-form";
 
 // DEBUG FLAG: Set to true to disable automatic transitions and show debugging controls
 const DEBUG = false;
@@ -50,11 +50,10 @@ const formSchema = z.object({
   reasonToVisit: z.string().min(5, {
     message: "Please provide a reason for your visit.",
   }),
-  company: z.string().optional(),
   selectedRoom: z.string().optional(),
 });
 
-export function NewVisitorRegistrationForm() {
+export function VisitorRegistrationForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
@@ -67,7 +66,6 @@ export function NewVisitorRegistrationForm() {
     startTime: string;
     vehicleNumber?: string;
     reasonToVisit: string;
-    company?: string;
     selectedRoom?: string;
   } | null>(null);
   const [showIframe, setShowIframe] = useState(DEBUG);
@@ -82,8 +80,7 @@ export function NewVisitorRegistrationForm() {
       visitDate: "",
       startTime: "10:00",
       vehicleNumber: "",
-      reasonToVisit: "AI Residency @ 500 Social House",
-      company: "",
+      reasonToVisit: "Co-working @ 500 Social House",
       selectedRoom: "",
     },
   });
@@ -99,8 +96,7 @@ export function NewVisitorRegistrationForm() {
         form.setValue("icPassport", parsed.icPassport || "");
         form.setValue("phoneNumber", parsed.phoneNumber || "");
         form.setValue("vehicleNumber", parsed.vehicleNumber || "");
-        form.setValue("reasonToVisit", "AI Residency @ 500 Social House");
-        form.setValue("company", parsed.company || "");
+        form.setValue("reasonToVisit", "Co-working @ 500 Social House");
         if (parsed.selectedRoom) {
           form.setValue("selectedRoom", parsed.selectedRoom);
         }
@@ -141,7 +137,6 @@ export function NewVisitorRegistrationForm() {
         icPassport: values.icPassport,
         phoneNumber: values.phoneNumber,
         vehicleNumber: values.vehicleNumber,
-        company: values.company,
         selectedRoom: values.selectedRoom,
       })
     );
@@ -157,7 +152,6 @@ export function NewVisitorRegistrationForm() {
       startTime: values.startTime,
       vehicleNumber: values.vehicleNumber,
       reasonToVisit: values.reasonToVisit,
-      company: values.company,
       selectedRoom: values.selectedRoom,
     };
 
@@ -366,24 +360,6 @@ export function NewVisitorRegistrationForm() {
 
               <FormField
                 control={form.control}
-                name="company"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Acme Inc."
-                        {...field}
-                        disabled={isLoading}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
                 name="reasonToVisit"
                 render={({ field }) => (
                   <FormItem>
@@ -393,7 +369,7 @@ export function NewVisitorRegistrationForm() {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="AI Residency @ 500 Social House"
+                        placeholder="Co-working @ 500 Social House"
                         {...field}
                         disabled={true}
                       />
@@ -436,7 +412,7 @@ export function NewVisitorRegistrationForm() {
           )}
 
           {/* Hidden form that submits to Nuveq */}
-          <NewHiddenNuveqForm
+          <HiddenNuveqForm
             formData={submitData || undefined}
             onComplete={handleFormComplete}
             visible={showIframe}

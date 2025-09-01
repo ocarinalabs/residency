@@ -14,6 +14,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 // Navigation items
 const navItems = [
   { name: "Register", href: "#register" },
+  { name: "Guide", href: "/guide" },
   { name: "Pass", href: "/pass" },
 ];
 

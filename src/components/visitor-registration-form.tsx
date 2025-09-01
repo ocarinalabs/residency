@@ -16,11 +16,16 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect, useCallback } from "react";
 import { Loader2, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Calendar24 } from "@/components/ui/calendar-date";
-import { HiddenNuveqForm } from "./hidden-nuveq-form";
+// import { RoomSelector } from "./room-selector";
 
 // DEBUG FLAG: Set to true to disable automatic transitions and show debugging controls
-const DEBUG = false;
+// You can also enable debug mode by adding ?debug=true to the URL
+const DEBUG =
+  typeof window !== "undefined" &&
+  (new URLSearchParams(window.location.search).get("debug") === "true" ||
+    false);
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -50,25 +55,15 @@ const formSchema = z.object({
   reasonToVisit: z.string().min(5, {
     message: "Please provide a reason for your visit.",
   }),
+  company: z.string().optional(),
   selectedRoom: z.string().optional(),
+  bookingDuration: z.string().optional(),
 });
 
 export function VisitorRegistrationForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
-  const [submitData, setSubmitData] = useState<{
-    fullName: string;
-    email: string;
-    icPassport: string;
-    phoneNumber: string;
-    visitDate: string;
-    startTime: string;
-    vehicleNumber?: string;
-    reasonToVisit: string;
-    selectedRoom?: string;
-  } | null>(null);
-  const [showIframe, setShowIframe] = useState(DEBUG);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,8 +75,10 @@ export function VisitorRegistrationForm() {
       visitDate: "",
       startTime: "10:00",
       vehicleNumber: "",
-      reasonToVisit: "AI Residency @ 500 Social House",
+      reasonToVisit: "Co-working @ 500 Social House",
+      company: "",
       selectedRoom: "",
+      bookingDuration: "2",
     },
   });
 
@@ -96,9 +93,13 @@ export function VisitorRegistrationForm() {
         form.setValue("icPassport", parsed.icPassport || "");
         form.setValue("phoneNumber", parsed.phoneNumber || "");
         form.setValue("vehicleNumber", parsed.vehicleNumber || "");
-        form.setValue("reasonToVisit", "AI Residency @ 500 Social House");
+        form.setValue("reasonToVisit", "Co-working @ 500 Social House");
+        form.setValue("company", parsed.company || "");
         if (parsed.selectedRoom) {
           form.setValue("selectedRoom", parsed.selectedRoom);
+        }
+        if (parsed.bookingDuration) {
+          form.setValue("bookingDuration", parsed.bookingDuration);
         }
         // Silent auto-fill, no toast
       } catch (e) {
@@ -106,14 +107,6 @@ export function VisitorRegistrationForm() {
       }
     }
   }, [form]);
-
-  const handleFormComplete = useCallback(() => {
-    setIsLoading(false);
-    setIsSubmitted(true);
-    // Clear form data after submission
-    setSubmitData(null);
-    setShowIframe(false);
-  }, []);
 
   const handleDateTimeChange = useCallback(
     (date: string, time: string) => {
@@ -137,40 +130,80 @@ export function VisitorRegistrationForm() {
         icPassport: values.icPassport,
         phoneNumber: values.phoneNumber,
         vehicleNumber: values.vehicleNumber,
+        company: values.company,
         selectedRoom: values.selectedRoom,
+        bookingDuration: values.bookingDuration,
       })
     );
     console.log("💾 Saved to localStorage");
 
-    // Set the data to trigger the hidden form submission
-    const submitPayload = {
-      fullName: values.fullName,
-      email: values.email,
-      icPassport: values.icPassport,
-      phoneNumber: values.phoneNumber,
-      visitDate: values.visitDate,
-      startTime: values.startTime,
-      vehicleNumber: values.vehicleNumber,
-      reasonToVisit: values.reasonToVisit,
-      selectedRoom: values.selectedRoom,
-    };
+    try {
+      // Format dates for API
+      const visitStart = new Date(values.visitDate + "T" + values.startTime)
+        .toISOString()
+        .replace(".000Z", "Z");
+      const visitEnd = new Date(values.visitDate + "T23:59")
+        .toISOString()
+        .replace(".000Z", "Z");
 
-    console.log("🎯 Triggering hidden form with payload:", submitPayload);
-    setSubmitData(submitPayload);
+      const payload = {
+        name: values.fullName,
+        email: values.email,
+        userId: null,
+        phone: values.phoneNumber,
+        keytoken: "fK2FBZ9WWr4lpa3U2dq2",
+        visitStart: visitStart,
+        visitEnd: visitEnd,
+        vehicleNumber: values.vehicleNumber || null,
+        reason: values.reasonToVisit,
+        companyName: values.company || "500 Social House",
+        inviterEmail: null,
+        liftGroupId: null,
+        userPhoto: null,
+        isRepeatVisit: true,
+      };
 
-    // The form will submit in the background
-    if (!DEBUG) {
-      // Production mode: auto-progress after 3 seconds
-      setTimeout(() => {
-        console.log("⏱️ Timer complete, showing success message");
+      console.log("🎯 Calling proxy API with payload:", payload);
+
+      // Call the proxy API directly
+      const response = await fetch("/api/nuveq-proxy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const responseData = await response.json();
+      console.log("📨 Proxy response:", responseData);
+
+      if (responseData.success) {
+        console.log("✅ Registration successful!");
+        toast.success(
+          "Registration successful! Check your email for the visitor pass."
+        );
         setIsLoading(false);
         setIsSubmitted(true);
-        // Clear form data after submission
-        setSubmitData(null);
-        setShowIframe(false);
-      }, 3000);
-    } else {
-      console.log("🐛 DEBUG MODE: Auto-progression disabled");
+      } else {
+        console.error("❌ Registration failed:", responseData);
+
+        // Parse error message
+        let errorMessage = "Registration failed. ";
+        if (responseData.data?.message) {
+          errorMessage += responseData.data.message;
+        } else if (responseData.data?.error) {
+          errorMessage += responseData.data.error;
+        } else {
+          errorMessage += "Please try again or contact support.";
+        }
+
+        toast.error(errorMessage);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("❌ Network error:", error);
+      toast.error("Network error. Please check your connection and try again.");
+      setIsLoading(false);
     }
   }
 
@@ -180,22 +213,23 @@ export function VisitorRegistrationForm() {
         // Success state
         <div className="flex flex-col items-center justify-center py-8 space-y-4">
           <CheckCircle className="h-16 w-16 text-green-500" />
-          <h2 className="text-2xl font-bold text-center">Form Submitted!</h2>
+          <h2 className="text-2xl font-bold text-center">
+            Registration Complete!
+          </h2>
           <p className="text-sm text-muted-foreground text-center px-4">
-            Check your email for the visitor pass link. You should receive it
-            within a few minutes.
+            Check your email for the visitor pass link.
           </p>
-          <Button onClick={() => router.push("/pass")} className="mt-4">
-            Go to Pass
-          </Button>
+          <div className="flex gap-3 mt-4">
+            <Button onClick={() => router.push("/pass")} variant="default">
+              Access Pass
+            </Button>
+          </div>
         </div>
       ) : (
         // Form state
         <>
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-center">
-              AI Residency Access
-            </h2>
+            <h2 className="text-2xl font-bold text-center">Visitor Access</h2>
           </div>
 
           <Form {...form}>
@@ -304,41 +338,15 @@ export function VisitorRegistrationForm() {
                 )}
               </div>
 
-              {/* Room Selection Section - Commented out for now */}
-              {/* <FormField
-            control={form.control}
-            name="selectedRoom"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Select a Room</FormLabel>
-                <FormControl>
-                  <select
-                    {...field}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    disabled={isLoading}
-                  >
-                    <option value="">No room selected</option>
-                    <option value="singapore">Singapore</option>
-                    <option value="bangkok">Bangkok</option>
-                    <option value="tokyo">Tokyo</option>
-                    <option value="seoul">Seoul</option>
-                    <option value="abu-dhabi">Abu Dhabi</option>
-                    <option value="cairo">Cairo</option>
-                    <option value="riyadh">Riyadh</option>
-                    <option value="miami">Miami</option>
-                    <option value="davos">Davos</option>
-                    <option value="london">London</option>
-                  </select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
-
-              {/* Additional Details Section */}
-              <div className="space-y-2 pt-2">
-                <h3 className="text-sm font-semibold">Additional Details</h3>
-              </div>
+              {/* Room Selection Section - Disabled for now */}
+              {/* <RoomSelector
+                selectedRoomId={form.watch("selectedRoom")}
+                selectedDuration={form.watch("bookingDuration")}
+                onRoomSelect={(roomId) => form.setValue("selectedRoom", roomId)}
+                onDurationSelect={(duration) =>
+                  form.setValue("bookingDuration", duration)
+                }
+              /> */}
 
               <FormField
                 control={form.control}
@@ -360,6 +368,24 @@ export function VisitorRegistrationForm() {
 
               <FormField
                 control={form.control}
+                name="company"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Acme Inc."
+                        {...field}
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="reasonToVisit"
                 render={({ field }) => (
                   <FormItem>
@@ -369,9 +395,9 @@ export function VisitorRegistrationForm() {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="AI Residency @ 500 Social House"
+                        placeholder="Co-working @ 500 Social House"
                         {...field}
-                        disabled={true}
+                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -391,33 +417,6 @@ export function VisitorRegistrationForm() {
               </Button>
             </form>
           </Form>
-
-          {/* Toggle to show iframe - only visible in DEBUG mode */}
-          {DEBUG && (
-            <div className="mt-4 flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="show-iframe"
-                checked={showIframe}
-                onChange={(e) => setShowIframe(e.target.checked)}
-                className="h-4 w-4"
-              />
-              <label
-                htmlFor="show-iframe"
-                className="text-sm text-muted-foreground"
-              >
-                Show submission iframe (DEBUG MODE)
-              </label>
-            </div>
-          )}
-
-          {/* Hidden form that submits to Nuveq */}
-          <HiddenNuveqForm
-            formData={submitData || undefined}
-            onComplete={handleFormComplete}
-            visible={showIframe}
-            debug={DEBUG}
-          />
         </>
       )}
     </div>

@@ -3,19 +3,19 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { Marquee } from "@/components/ui/marquee";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
-import {
-  GrabIcon,
-  CarsomeIcon,
-  BukalapakIcon,
-  CarousellIcon,
-  FinAccelIcon,
-  Pomelo,
-  SeventhSenseAI,
-  Alodokter,
-  Homage,
-  NinetyNineCo,
-  AppBoxo,
-} from "@/components/icons/startups";
+// import {
+//   GrabIcon,
+//   CarsomeIcon,
+//   BukalapakIcon,
+//   CarousellIcon,
+//   FinAccelIcon,
+//   Pomelo,
+//   SeventhSenseAI,
+//   Alodokter,
+//   Homage,
+//   NinetyNineCo,
+//   AppBoxo,
+// } from "@/components/icons/startups";
 import {
   ReplyrAI,
   CleveAI,
@@ -100,7 +100,8 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
             </div>
           </BlurFade>
 
-          <div className="mt-4 sm:mt-6 md:-mt-10 lg:-mt-20">
+          <div className="mt-8 sm:mt-10 md:mt-12">
+            {/* Startups Marquee - Commented out
             <BlurFade delay={0.3}>
               <Marquee className="max-w-full sm:max-w-3xl md:max-w-4xl">
                 {(
@@ -256,6 +257,7 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                 })}
               </Marquee>
             </BlurFade>
+            */}
 
             {/* Technology Stack Marquee */}
             <BlurFade delay={0.35}>

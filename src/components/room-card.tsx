@@ -1,171 +1,162 @@
 "use client";
 
-import { Room } from "@/lib/room-data";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Users, Check, X, DollarSign, Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { RoomData } from "@/lib/constants/rooms";
+import { Users, MapPin, Check, X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface RoomCardProps {
-  room: Room;
-  selected?: boolean;
-  onSelect?: (room: Room) => void;
-  compact?: boolean;
+  room: RoomData;
+  onSelect?: (roomId: string) => void;
+  isSelected?: boolean;
+  showSelectButton?: boolean;
+  className?: string;
 }
 
 export function RoomCard({
   room,
-  selected = false,
   onSelect,
-  compact = false,
+  isSelected = false,
+  showSelectButton = false,
+  className,
 }: RoomCardProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const categoryColors = {
-    meeting: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-    conference:
-      "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-    office: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-    lounge:
-      "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
+  // All images including main and gallery
+  const allImages = [room.images.main, ...room.images.gallery];
+
+  const handleImageError = () => {
+    setImageError(true);
   };
 
-  const categoryLabels = {
-    meeting: "Meeting Room",
-    conference: "Conference Hall",
-    office: "Private Office",
-    lounge: "Lounge Space",
-  };
+  // const nextImage = () => {
+  //   setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+  // };
+
+  // const prevImage = () => {
+  //   setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  // };
 
   return (
     <Card
       className={cn(
-        "overflow-hidden transition-all duration-300 transform-gpu",
-        "hover:shadow-xl hover:-translate-y-1",
-        selected && "ring-2 ring-primary shadow-lg scale-[1.02]",
-        !room.available && "opacity-60 hover:transform-none",
-        onSelect && room.available && "cursor-pointer",
-        "group"
+        "overflow-hidden hover:shadow-lg transition-all duration-200",
+        isSelected && "ring-2 ring-primary",
+        className
       )}
-      onClick={() => room.available && onSelect?.(room)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-muted to-muted/50">
-        {!imageLoaded && (
-          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        )}
-        <img
-          src={room.image}
-          alt={room.name}
-          className={cn(
-            "h-full w-full object-cover transition-all duration-500",
-            isHovered && room.available && "scale-110 brightness-105",
-            imageLoaded ? "opacity-100" : "opacity-0"
-          )}
-          onLoad={() => setImageLoaded(true)}
-        />
-
-        {/* Gradient overlay for better text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        {selected && (
-          <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-1.5 shadow-lg animate-in fade-in zoom-in duration-300">
-            <Check className="h-4 w-4" />
+      {/* Image Section */}
+      <div className="relative h-48 bg-muted">
+        {!imageError ? (
+          <>
+            <Image
+              src={allImages[currentImageIndex]}
+              alt={room.name}
+              fill
+              className="object-cover"
+              onError={handleImageError}
+              priority={false}
+            />
+            {/* Image navigation dots */}
+            {allImages.length > 1 && (
+              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+                {allImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={cn(
+                      "w-2 h-2 rounded-full transition-colors",
+                      index === currentImageIndex
+                        ? "bg-white"
+                        : "bg-white/50 hover:bg-white/75"
+                    )}
+                    aria-label={`View image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-muted">
+            <div className="text-center">
+              <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
+              <p className="text-sm text-muted-foreground">{room.name}</p>
+            </div>
           </div>
         )}
 
-        {!room.available && (
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-            <Badge variant="destructive" className="text-sm shadow-lg">
-              <X className="mr-1 h-3 w-3" />
-              Unavailable
-            </Badge>
-          </div>
-        )}
-
-        {/* Quick action overlay on hover */}
-        {room.available && onSelect && isHovered && !compact && (
-          <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center animate-in slide-in-from-bottom duration-300">
-            <Badge className="bg-white/90 text-black backdrop-blur-sm">
-              <Sparkles className="mr-1 h-3 w-3" />
-              Available Now
-            </Badge>
-          </div>
-        )}
-      </div>
-
-      <CardHeader className={cn("space-y-2", compact && "pb-2")}>
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-lg leading-tight">{room.name}</h3>
-          <Badge className={cn("text-xs", categoryColors[room.category])}>
-            {categoryLabels[room.category]}
+        {/* Availability Badge */}
+        <div className="absolute top-2 right-2">
+          <Badge
+            variant={room.available !== false ? "default" : "secondary"}
+            className="gap-1"
+          >
+            {room.available !== false ? (
+              <>
+                <Check className="h-3 w-3" />
+                Available
+              </>
+            ) : (
+              <>
+                <X className="h-3 w-3" />
+                Occupied
+              </>
+            )}
           </Badge>
         </div>
+      </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Users className="h-3 w-3 shrink-0" />
-            <span className="whitespace-nowrap">Up to {room.capacity}</span>
+      <CardHeader className="pb-3">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="font-semibold text-lg">{room.name}</h3>
+            {room.floor && (
+              <p className="text-sm text-muted-foreground">{room.floor}</p>
+            )}
           </div>
-          {room.pricePerHour && (
-            <div className="flex items-center gap-1 font-medium">
-              <DollarSign className="h-3 w-3 shrink-0" />
-              <span>{room.pricePerHour}/hr</span>
-            </div>
-          )}
+          <Badge variant="outline" className="gap-1">
+            <Users className="h-3 w-3" />
+            {room.capacity}
+          </Badge>
         </div>
       </CardHeader>
 
-      {!compact && (
-        <>
-          <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground line-clamp-2">
-              {room.description}
-            </p>
+      <CardContent className="space-y-3">
+        <p className="text-sm text-muted-foreground">{room.description}</p>
 
-            <div className="flex flex-wrap gap-1">
-              {room.amenities.slice(0, 3).map((amenity) => (
-                <Badge key={amenity} variant="secondary" className="text-xs">
-                  {amenity}
-                </Badge>
-              ))}
-              {room.amenities.length > 3 && (
-                <Badge variant="secondary" className="text-xs">
-                  +{room.amenities.length - 3} more
-                </Badge>
-              )}
-            </div>
-          </CardContent>
+        {/* Amenities */}
+        {room.amenities.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {room.amenities.slice(0, 3).map((amenity) => (
+              <Badge key={amenity} variant="secondary" className="text-xs">
+                {amenity}
+              </Badge>
+            ))}
+            {room.amenities.length > 3 && (
+              <Badge variant="secondary" className="text-xs">
+                +{room.amenities.length - 3} more
+              </Badge>
+            )}
+          </div>
+        )}
 
-          {onSelect && (
-            <CardFooter>
-              <Button
-                className="w-full"
-                variant={selected ? "default" : "outline"}
-                disabled={!room.available}
-              >
-                {selected ? (
-                  <>
-                    <Check className="mr-2 h-4 w-4" />
-                    Selected
-                  </>
-                ) : (
-                  "Select Room"
-                )}
-              </Button>
-            </CardFooter>
-          )}
-        </>
-      )}
+        {/* Select Button */}
+        {showSelectButton && onSelect && (
+          <Button
+            onClick={() => onSelect(room.id)}
+            variant={isSelected ? "default" : "outline"}
+            size="sm"
+            className="w-full"
+          >
+            {isSelected ? "Selected" : "Select Room"}
+          </Button>
+        )}
+      </CardContent>
     </Card>
   );
 }

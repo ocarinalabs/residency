@@ -22,6 +22,7 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = React.useState<string>("09:00");
+  const [endTime] = React.useState<string>("23:59");
 
   // Set default date on mount
   React.useEffect(() => {
@@ -52,7 +53,7 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         <Label htmlFor="date" className="px-1">
           Date<span className="text-red-500 align-top text-xs">*</span>
         </Label>
@@ -87,7 +88,7 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
           {[
             { label: "Today", value: 0 },
             { label: "Tomorrow", value: 1 },
-            { label: "In 3 days", value: 3 },
+            { label: "In 2 days", value: 2 },
           ].map((preset) => (
             <Button
               key={preset.value}
@@ -106,7 +107,7 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
         </div>
       </div>
       <div className="flex gap-4">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <Label htmlFor="time-from" className="px-1">
             From
           </Label>
@@ -118,15 +119,15 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
             className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
           />
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <Label htmlFor="time-to" className="px-1">
             To
           </Label>
           <Input
             type="time"
             id="time-to"
-            value="23:59"
-            disabled
+            value={endTime}
+            disabled={true}
             className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
           />
         </div>

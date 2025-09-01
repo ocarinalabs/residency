@@ -4,7 +4,12 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log("Proxy received:", body);
+    console.log("🎯 [PROXY] Incoming request:", body);
+    console.log("🔍 [PROXY] Keytoken:", body.keytoken);
+    console.log("📅 [PROXY] Visit dates:", {
+      start: body.visitStart,
+      end: body.visitEnd,
+    });
 
     // Make the request to Nuveq API from server-side (no CORS)
     const response = await fetch(
@@ -25,8 +30,27 @@ export async function POST(request: NextRequest) {
     );
 
     const responseText = await response.text();
-    console.log("Nuveq response status:", response.status);
-    console.log("Nuveq response:", responseText);
+    console.log("📡 [NUVEQ] Response status:", response.status);
+    console.log(
+      "📝 [NUVEQ] Response headers:",
+      Object.fromEntries(response.headers.entries())
+    );
+    console.log("📄 [NUVEQ] Response body:", responseText);
+
+    // Check for specific error patterns
+    if (
+      responseText.includes("credential") ||
+      responseText.includes("authentication") ||
+      responseText.includes("unauthorized")
+    ) {
+      console.error("🔐 [NUVEQ] CREDENTIAL/AUTH ERROR DETECTED IN RESPONSE");
+    }
+    if (
+      responseText.includes("already registered") ||
+      responseText.includes("duplicate")
+    ) {
+      console.warn("⚠️ [NUVEQ] DUPLICATE REGISTRATION DETECTED");
+    }
 
     // Try to parse as JSON, fallback to text
     let responseData;
@@ -36,16 +60,25 @@ export async function POST(request: NextRequest) {
       responseData = { message: responseText };
     }
 
+    const isSuccess = response.status === 201 || response.ok;
+    console.log(
+      isSuccess ? "✅ [PROXY] Success response" : "❌ [PROXY] Failed response"
+    );
+
     return NextResponse.json(
       {
-        success: response.status === 201 || response.ok,
+        success: isSuccess,
         status: response.status,
         data: responseData,
       },
       { status: response.status === 201 ? 201 : response.status }
     );
   } catch (error) {
-    console.error("Proxy error:", error);
+    console.error("❌ [PROXY] Error:", error);
+    console.error("📊 [PROXY] Error details:", {
+      message: error instanceof Error ? error.message : "Unknown",
+      stack: error instanceof Error ? error.stack : "No stack",
+    });
     return NextResponse.json(
       {
         success: false,

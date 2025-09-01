@@ -3,7 +3,6 @@
 import { AnimatedNavFramer } from "@/components/ui/navigation-bar-animation";
 import { Hero } from "@/components/ui/hero";
 import { BGPattern } from "@/components/ui/bg-pattern";
-import { VisitorRegistrationForm } from "@/components/visitor-registration-form";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -38,20 +37,13 @@ export default function Home() {
       />
       <AnimatedNavFramer />
       <Hero
-        heading="AI Residency Registration"
-        description="In the 500 Social House"
+        heading="The 500 Social House"
+        description="A collaborative space for AI builders and founders"
         buttons={{
-          primary: { text: "Register", url: "#register" },
-          secondary: { text: "Access Pass", url: "/pass" },
+          primary: { text: "Register", url: "/register" },
+          secondary: { text: "Guide", url: "/guide" },
         }}
       />
-
-      {/* Visitor Registration Form */}
-      <section id="register" className="relative py-20 w-full">
-        <div className="container mx-auto px-4">
-          <VisitorRegistrationForm />
-        </div>
-      </section>
     </main>
   );
 }

@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState, useEffect, useCallback } from "react";
 import { Loader2, CheckCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Calendar24 } from "@/components/ui/calendar-date";
 // import { RoomSelector } from "./room-selector";
@@ -63,7 +62,6 @@ const formSchema = z.object({
 export function VisitorRegistrationForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -180,7 +178,7 @@ export function VisitorRegistrationForm() {
       if (responseData.success) {
         console.log("✅ Registration successful!");
         toast.success(
-          "Registration successful! Check your email for the visitor pass."
+          "Registration successful! Check your email for confirmation."
         );
         setIsLoading(false);
         setIsSubmitted(true);
@@ -217,13 +215,8 @@ export function VisitorRegistrationForm() {
             Registration Complete!
           </h2>
           <p className="text-sm text-muted-foreground text-center px-4">
-            Check your email for the visitor pass link.
+            Check your email for confirmation.
           </p>
-          <div className="flex gap-3 mt-4">
-            <Button onClick={() => router.push("/pass")} variant="default">
-              Access Pass
-            </Button>
-          </div>
         </div>
       ) : (
         // Form state

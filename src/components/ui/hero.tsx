@@ -261,75 +261,80 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
 
             {/* Technology Stack Marquee */}
             <BlurFade delay={0.35}>
-              <Marquee
-                direction="right"
-                className="max-w-full sm:max-w-3xl md:max-w-4xl !mt-4 !sm:mt-6"
-              >
-                {(
-                  [
-                    {
-                      component: ReplyrAI,
-                      link: "https://replyr.ai",
-                      name: "ReplyrAI",
-                    },
-                    {
-                      component: CleveAI,
-                      link: "https://cleve.ai",
-                      name: "CleveAI",
-                    },
-                    {
-                      component: DocuAsk,
-                      link: "https://docuask.ai",
-                      name: "DocuAsk",
-                    },
-                    {
-                      image: ResidentImages.bluebolt,
-                      link: "https://blueboltlabs.com",
-                      name: "Blue Bolt Labs",
-                    },
-                    {
-                      image: ResidentImages.easybuzz,
-                      link: "https://easybuzz.ai",
-                      name: "EasyBuzz",
-                    },
-                    {
-                      component: StealthStartup,
-                      link: "https://stealth-startups.com",
-                      name: "Stealth Startup",
-                    },
-                    {
-                      component: NewellRoad,
-                      link: "https://newellroad.com",
-                      name: "Newell Road",
-                    },
-                  ] as MarqueeItem[]
-                ).map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative h-full w-fit mx-3 sm:mx-4 md:mx-6 lg:mx-8 flex items-center justify-start hover:opacity-80 transition-opacity"
-                    aria-label={item.name}
-                  >
-                    {"component" in item ? (
-                      <item.component className="h-6 w-auto sm:h-7 md:h-8" />
-                    ) : (
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className={
-                          item.name === "Blue Bolt Labs" ||
-                          item.name === "EasyBuzz"
-                            ? "h-10 w-auto sm:h-12 md:h-14 object-contain"
-                            : "h-5 w-auto sm:h-6 md:h-7 object-contain"
-                        }
-                        loading="lazy"
-                      />
-                    )}
-                  </a>
-                ))}
-              </Marquee>
+              <div className="space-y-2 mt-4 sm:mt-6">
+                <p className="text-sm text-muted-foreground text-center font-medium">
+                  Our AI Residents
+                </p>
+                <Marquee
+                  direction="right"
+                  className="max-w-full sm:max-w-3xl md:max-w-4xl"
+                >
+                  {(
+                    [
+                      {
+                        component: ReplyrAI,
+                        link: "https://replyr.ai",
+                        name: "ReplyrAI",
+                      },
+                      {
+                        component: CleveAI,
+                        link: "https://cleve.ai",
+                        name: "CleveAI",
+                      },
+                      {
+                        component: DocuAsk,
+                        link: "https://docuask.ai",
+                        name: "DocuAsk",
+                      },
+                      {
+                        image: ResidentImages.bluebolt,
+                        link: "https://blueboltlabs.com",
+                        name: "Blue Bolt Labs",
+                      },
+                      {
+                        image: ResidentImages.easybuzz,
+                        link: "https://easybuzz.ai",
+                        name: "EasyBuzz",
+                      },
+                      {
+                        component: StealthStartup,
+                        link: "https://stealth-startups.com",
+                        name: "Stealth Startup",
+                      },
+                      {
+                        component: NewellRoad,
+                        link: "https://newellroad.com",
+                        name: "Newell Road",
+                      },
+                    ] as MarqueeItem[]
+                  ).map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative h-full w-fit mx-3 sm:mx-4 md:mx-6 lg:mx-8 flex items-center justify-start hover:opacity-80 transition-opacity"
+                      aria-label={item.name}
+                    >
+                      {"component" in item ? (
+                        <item.component className="h-6 w-auto sm:h-7 md:h-8" />
+                      ) : (
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className={
+                            item.name === "Blue Bolt Labs" ||
+                            item.name === "EasyBuzz"
+                              ? "h-10 w-auto sm:h-12 md:h-14 object-contain"
+                              : "h-5 w-auto sm:h-6 md:h-7 object-contain"
+                          }
+                          loading="lazy"
+                        />
+                      )}
+                    </a>
+                  ))}
+                </Marquee>
+              </div>
             </BlurFade>
           </div>
         </div>

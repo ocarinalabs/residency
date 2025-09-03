@@ -24,6 +24,17 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
   const [startTime, setStartTime] = React.useState<string>("09:00");
   const [endTime] = React.useState<string>("23:59");
 
+  // Helper function to check if a date matches the preset
+  const isDateSelected = (presetDays: number): boolean => {
+    if (!date) return false;
+    const presetDate = addDays(new Date(), presetDays);
+    return (
+      date.getFullYear() === presetDate.getFullYear() &&
+      date.getMonth() === presetDate.getMonth() &&
+      date.getDate() === presetDate.getDate()
+    );
+  };
+
   // Set default date on mount
   React.useEffect(() => {
     const today = new Date();
@@ -93,7 +104,7 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
             <Button
               key={preset.value}
               type="button"
-              variant="outline"
+              variant={isDateSelected(preset.value) ? "default" : "outline"}
               size="sm"
               className="flex-1"
               onClick={() => {

@@ -27,9 +27,10 @@ export function NuveqAppDownload() {
           <CardTitle className="text-lg">For New Visitors</CardTitle>
         </div>
         <CardDescription className="mt-2">
-          If you&apos;re new to 500 Social House, download the Nuveq app to get entry access. Already have a Nuveq account? Skip this step and
-          proceed to registration below. A Nuveq account is required to register
-          as a visitor.
+          If you&apos;re new to 500 Social House, download the Nuveq app to get
+          entry access. Already have a Nuveq account? Skip this step and proceed
+          to registration below. A Nuveq account is required to register as a
+          visitor.
         </CardDescription>
       </CardHeader>
       <CardContent>

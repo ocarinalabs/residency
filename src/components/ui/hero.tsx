@@ -267,7 +267,7 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                 </p>
                 <Marquee
                   direction="right"
-                  className="max-w-full sm:max-w-3xl md:max-w-4xl"
+                  className="max-w-full sm:max-w-3xl md:max-w-4xl !mt-2"
                 >
                   {(
                     [

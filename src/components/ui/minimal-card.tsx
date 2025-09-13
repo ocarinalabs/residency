@@ -1,7 +1,7 @@
-import * as React from "react"
-import Image from "next/image"
+import * as React from "react";
+import Image from "next/image";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const MinimalCard = React.forwardRef<
   HTMLDivElement,
@@ -20,8 +20,8 @@ const MinimalCard = React.forwardRef<
   >
     {children}
   </div>
-))
-MinimalCard.displayName = "MinimalCard"
+));
+MinimalCard.displayName = "MinimalCard";
 
 const MinimalCardImage = React.forwardRef<
   HTMLDivElement,
@@ -60,8 +60,8 @@ const MinimalCardImage = React.forwardRef<
       />
     </div>
   </div>
-))
-MinimalCardImage.displayName = "MinimalCardImage"
+));
+MinimalCardImage.displayName = "MinimalCardImage";
 
 const MinimalCardTitle = React.forwardRef<
   HTMLHeadingElement,
@@ -72,8 +72,8 @@ const MinimalCardTitle = React.forwardRef<
     className={cn("text-lg mt-2 font-semibold leading-tight px-1", className)}
     {...props}
   />
-))
-MinimalCardTitle.displayName = "MinimalCardTitle"
+));
+MinimalCardTitle.displayName = "MinimalCardTitle";
 
 const MinimalCardDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -84,16 +84,16 @@ const MinimalCardDescription = React.forwardRef<
     className={cn("text-sm text-neutral-500 pb-2 px-1", className)}
     {...props}
   />
-))
-MinimalCardDescription.displayName = "MinimalCardDescription"
+));
+MinimalCardDescription.displayName = "MinimalCardDescription";
 
 const MinimalCardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
   <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-))
-MinimalCardContent.displayName = "MinimalCardContent"
+));
+MinimalCardContent.displayName = "MinimalCardContent";
 
 const MinimalCardFooter = React.forwardRef<
   HTMLDivElement,
@@ -104,8 +104,8 @@ const MinimalCardFooter = React.forwardRef<
     className={cn("flex items-center p-6 pt-0", className)}
     {...props}
   />
-))
-MinimalCardFooter.displayName = "MinimalCardFooter"
+));
+MinimalCardFooter.displayName = "MinimalCardFooter";
 
 export {
   MinimalCard,
@@ -114,4 +114,4 @@ export {
   MinimalCardDescription,
   MinimalCardContent,
   MinimalCardFooter,
-}
+};

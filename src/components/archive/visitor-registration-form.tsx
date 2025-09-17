@@ -211,7 +211,7 @@ export function VisitorRegistrationForm() {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Khailee Ng"
+                        placeholder="John Doe"
                         {...field}
                         disabled={isLoading}
                       />

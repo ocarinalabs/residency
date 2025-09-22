@@ -158,7 +158,7 @@ export function VisitorRegistrationForm() {
         inviterEmail: null,
         liftGroupId: null,
         userPhoto: null,
-        isRepeatVisit: true,
+        isRepeatVisit: false,
       };
 
       console.log("🎯 Calling proxy API with payload:", payload);

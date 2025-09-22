@@ -23,6 +23,7 @@ import {
   ResidentImages,
   StealthStartup,
   NewellRoad,
+  Robin,
 } from "@/components/icons/residents";
 import { StartupImages } from "@/components/icons/startups";
 
@@ -263,7 +264,7 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
             <BlurFade delay={0.35}>
               <div className="space-y-2 mt-4 sm:mt-6">
                 <p className="text-sm text-muted-foreground text-center font-medium">
-                  Our AI Residents
+                  Our Residents
                 </p>
                 <Marquee
                   direction="right"
@@ -280,6 +281,11 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                         component: CleveAI,
                         link: "https://cleve.ai",
                         name: "CleveAI",
+                      },
+                      {
+                        component: Robin,
+                        link: "https://robinbiz.com",
+                        name: "Robin",
                       },
                       {
                         component: DocuAsk,
@@ -306,6 +312,11 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                         link: "https://newellroad.com",
                         name: "Newell Road",
                       },
+                      {
+                        image: ResidentImages.spark,
+                        link: "https://spark.vebmy.com",
+                        name: "Spark",
+                      },
                     ] as MarqueeItem[]
                   ).map((item, index) => (
                     <a
@@ -317,14 +328,21 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                       aria-label={item.name}
                     >
                       {"component" in item ? (
-                        <item.component className="h-6 w-auto sm:h-7 md:h-8" />
+                        <item.component
+                          className={
+                            item.name === "Robin"
+                              ? "h-8 w-auto sm:h-9 md:h-10"
+                              : "h-6 w-auto sm:h-7 md:h-8"
+                          }
+                        />
                       ) : (
                         <img
                           src={item.image}
                           alt={item.name}
                           className={
                             item.name === "Blue Bolt Labs" ||
-                            item.name === "EasyBuzz"
+                            item.name === "EasyBuzz" ||
+                            item.name === "Spark"
                               ? "h-10 w-auto sm:h-12 md:h-14 object-contain"
                               : "h-5 w-auto sm:h-6 md:h-7 object-contain"
                           }

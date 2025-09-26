@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
     try {
       // Use cookies directly from auth state
-      const cookieArray = authState.cookies.map((c: any) => ({
+      const cookieArray = authState.cookies.map((c: { name: string; value: string; domain?: string; path?: string }) => ({
         name: c.name,
         value: c.value,
         domain: c.domain || ".nuveq.cloud",
@@ -117,7 +117,7 @@ export async function POST(request: Request) {
         await page.click('.v-list-item:has-text("All")');
         await page.waitForTimeout(1000); // Give the table time to refresh
         console.log("[Browserless] Pagination set to All");
-      } catch (paginationError) {
+      } catch {
         console.log(
           "[Browserless] Could not set pagination to All, continuing with default view"
         );

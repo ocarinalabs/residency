@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { RoomData } from "@/lib/constants/rooms";
+import { RoomData } from "@/data/room-constants";
 import { Users, MapPin, Check, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";

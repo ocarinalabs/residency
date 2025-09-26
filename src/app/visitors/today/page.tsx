@@ -22,7 +22,7 @@ export default function TodayVisitorsPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Users className="h-6 w-6" />
-            <h1 className="text-2xl font-bold">Today's Visitors</h1>
+            <h1 className="text-2xl font-bold">Today&apos;s Visitors</h1>
             {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
           </div>
           <div className="flex items-center gap-4">

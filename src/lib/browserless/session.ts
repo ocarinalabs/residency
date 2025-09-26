@@ -148,7 +148,8 @@ class BrowserlessSessionManager {
     }
 
     console.log("Successfully logged into Nuveq");
-    console.log(`Cookies set: ${result.data.cookies?.cookies?.length || 0}`);
+    const dataWithCookies = result.data as { cookies?: { cookies?: unknown[] } };
+    console.log(`Cookies set: ${dataWithCookies.cookies?.cookies?.length || 0}`);
   }
 
   private async loginToNuveq(session: BrowserlessSession): Promise<void> {
@@ -246,7 +247,7 @@ class BrowserlessSessionManager {
 
       // Format cookies for GraphQL (not JSON)
       const cookiesGraphQL = authState.cookies
-        .map((cookie: any) => {
+        .map((cookie: { name: string; value: string; domain: string; path: string; expires: number; httpOnly: boolean; secure: boolean; sameSite: string }) => {
           // Escape string values properly
           const escapeValue = (str: string) =>
             str.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
@@ -309,7 +310,7 @@ class BrowserlessSessionManager {
     }
   }
 
-  async executeQuery(query: string): Promise<any> {
+  async executeQuery(query: string): Promise<unknown> {
     const session = await this.getSession();
 
     const response = await fetch(session.browserQL, {

@@ -25,7 +25,6 @@ import {
   NewellRoad,
   Robin,
 } from "@/components/icons/residents";
-import { StartupImages } from "@/components/icons/startups";
 
 type MarqueeItem = {
   link: string;

@@ -19,13 +19,6 @@ import { toast } from "sonner";
 import { Calendar24 } from "@/components/ui/calendar-date";
 // import { RoomSelector } from "./room-selector";
 
-// DEBUG FLAG: Set to true to disable automatic transitions and show debugging controls
-// You can also enable debug mode by adding ?debug=true to the URL
-const DEBUG =
-  typeof window !== "undefined" &&
-  (new URLSearchParams(window.location.search).get("debug") === "true" ||
-    false);
-
 const formSchema = z.object({
   fullName: z.string().min(2, {
     message: "Name must be at least 2 characters.",

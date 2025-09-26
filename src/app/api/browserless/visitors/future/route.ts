@@ -102,7 +102,7 @@ export async function GET() {
         // Wait for table to reload with all data
         await page.waitForTimeout(1000); // Give the table time to refresh
         console.log("[Browserless] Pagination set to All");
-      } catch (paginationError) {
+      } catch {
         console.log(
           "[Browserless] Could not set pagination to All, continuing with default view"
         );

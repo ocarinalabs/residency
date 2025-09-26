@@ -11,7 +11,7 @@ export async function POST() {
       today: { visitors: [], timestamp: null, count: 0 },
       future: { visitors: [], timestamp: null, count: 0 },
       pending: { visitors: [], timestamp: null, count: 0 },
-      lastSync: null,
+      lastSync: null as string | null,
     };
 
     // Fetch all visitor types sequentially to avoid rate limiting

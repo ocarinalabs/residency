@@ -1,9 +1,4 @@
-import {
-  BROWSERLESS_ENDPOINTS,
-  SESSION_CONFIG,
-  QUERY_TIMEOUTS,
-  NUVEQ_PATHS,
-} from "./constants";
+import { BROWSERLESS_ENDPOINTS } from "./constants";
 
 export function getBrowserlessToken(): string {
   const token = process.env.BROWSERLESS_API_TOKEN;
@@ -27,7 +22,7 @@ export interface BrowserlessSession {
   stop: string;
 }
 
-export interface BQLResponse<T = any> {
+export interface BQLResponse<T = unknown> {
   data: T;
   errors?: Array<{
     message: string;

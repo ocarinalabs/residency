@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
-
-declare global {
-  var browserlessAuthBrowser: any;
-  var browserlessAuthPage: any;
-}
+import { Browser, Page } from 'playwright';
+import * as path from 'path';
 
 export async function POST(request: Request) {
   try {
@@ -27,8 +24,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const browser = global.browserlessAuthBrowser;
-    const page = global.browserlessAuthPage;
+    const browser = global.browserlessAuthBrowser as Browser;
+    const page = global.browserlessAuthPage as Page;
 
     try {
       console.log("[Browserless] Filling in OTP code:", otp);
@@ -70,12 +67,12 @@ export async function POST(request: Request) {
       console.log(`[Browserless] Retrieved ${cookies.length} cookies`);
 
       const sessionCookies = cookies
-        .map((c: any) => `${c.name}=${c.value}`)
+        .map((c) => `${c.name}=${c.value}`)
         .join("; ");
       const sessionExpiry = new Date(Date.now() + 30 * 60 * 1000);
 
       // Save the browser state
-      const AUTH_STATE_PATH = require("path").join(
+      const AUTH_STATE_PATH = path.join(
         process.cwd(),
         "browserless-auth-state.json"
       );

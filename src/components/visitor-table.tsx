@@ -1,11 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { IconCheck, IconDotsVertical, IconUserX } from "@tabler/icons-react";
+import { IconCheck, IconDotsVertical, IconUserX, IconX } from "@tabler/icons-react";
 import { Loader2 } from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
+  Row,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -218,14 +219,19 @@ export const visitorColumns: ColumnDef<VisitorData>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: ({ row }) => <ActionCell row={row} />,
+  },
+];
+
+// Separate component for actions cell to avoid hooks in non-component function
+function ActionCell({ row }: { row: Row<VisitorData> }) {
       const visitor = row.original;
       const status = getVisitorStatus(visitor.visitFrom, visitor.visitTill);
       const [detailsOpen, setDetailsOpen] = React.useState(false);
       const [deleteOpen, setDeleteOpen] = React.useState(false);
       const [isDeleting, setIsDeleting] = React.useState(false);
 
-      const determineVisitorType = (visitor: Visitor): string => {
+      const determineVisitorType = (visitor: VisitorData): string => {
         const now = new Date();
         const visitFrom = new Date(visitor.visitFrom);
         const visitTill = new Date(visitor.visitTill);
@@ -265,7 +271,7 @@ export const visitorColumns: ColumnDef<VisitorData>[] = [
             const error = await response.json();
             toast.error(error.message || "Failed to delete visitor");
           }
-        } catch (err) {
+        } catch {
           toast.error("Failed to delete visitor");
         } finally {
           setIsDeleting(false);
@@ -435,9 +441,7 @@ export const visitorColumns: ColumnDef<VisitorData>[] = [
           </Dialog>
         </>
       );
-    },
-  },
-];
+}
 
 // Columns specifically for pending visitors with additional fields
 export const pendingVisitorColumns: ColumnDef<VisitorData>[] = [

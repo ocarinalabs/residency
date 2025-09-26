@@ -1,11 +1,6 @@
 import { chromium, Browser, BrowserContext, Page } from "playwright";
 import fs from "fs";
-import {
-  AUTH_CONFIG,
-  TIMEOUTS,
-  NUVEQ_ENDPOINTS,
-  DEFAULT_VALUES,
-} from "./constants";
+import { AUTH_CONFIG, TIMEOUTS } from "./constants";
 
 export interface Visitor {
   id: number;
@@ -80,36 +75,6 @@ async function navigateToPage(page: Page, endpoint: string): Promise<void> {
   } catch {
     console.log("No table found, checking for other content...");
   }
-}
-
-function parseVisitorRow(cells: HTMLElement[], index: number): Visitor | null {
-  const cellTexts = cells.map((cell) => cell.innerText?.trim() || "");
-
-  const visitor: Visitor = {
-    id: index + 1,
-    name: cellTexts[0] || DEFAULT_VALUES.NOT_AVAILABLE,
-    photo: DEFAULT_VALUES.EMPTY_STRING,
-    company: cellTexts[2] || DEFAULT_VALUES.NOT_AVAILABLE,
-    site: cellTexts[3] || DEFAULT_VALUES.NOT_AVAILABLE,
-    visitFrom: cellTexts[4] || DEFAULT_VALUES.NOT_AVAILABLE,
-    visitTill: cellTexts[5] || DEFAULT_VALUES.NOT_AVAILABLE,
-    visitorType: cellTexts[6] || DEFAULT_VALUES.NOT_AVAILABLE,
-    credential: cellTexts[7] || DEFAULT_VALUES.NOT_AVAILABLE,
-    invitedBy: cellTexts[8] || DEFAULT_VALUES.NOT_AVAILABLE,
-    vehicleNumber: cellTexts[9] || DEFAULT_VALUES.NOT_AVAILABLE,
-    reasonForVisit: cellTexts[10] || DEFAULT_VALUES.NOT_AVAILABLE,
-    approvedBy: cellTexts[11] || DEFAULT_VALUES.NOT_AVAILABLE,
-  };
-
-  if (
-    visitor.name &&
-    visitor.name !== DEFAULT_VALUES.NOT_AVAILABLE &&
-    visitor.name !== DEFAULT_VALUES.EMPTY_STRING
-  ) {
-    return visitor;
-  }
-
-  return null;
 }
 
 async function extractVisitors(page: Page): Promise<Visitor[]> {

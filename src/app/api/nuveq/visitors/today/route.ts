@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { scrapeNuveqVisitors } from "@/lib/nuveq-scraper";
+import { scrapeNuveqVisitors } from "@/lib/nuveq/scraper";
 
 export async function GET() {
   const result = await scrapeNuveqVisitors(

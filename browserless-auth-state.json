@@ -1,0 +1,67 @@
+{
+  "cookies": [
+    {
+      "name": "auth.strategy",
+      "value": "local",
+      "domain": "nuveq.cloud",
+      "path": "/",
+      "expires": 1790347999,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "auth._token.local",
+      "value": "Bearer%20eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3MDgzMSwiaWF0IjoxNzU4ODExOTk4LCJleHAiOjE3OTAzNDc5OTh9.IP9EProHUOVqSnXHSVvA7Ttr2pXIxARayoGYS66f9SM",
+      "domain": "nuveq.cloud",
+      "path": "/",
+      "expires": 1790347999,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "auth._token_expiration.local",
+      "value": "1790347998000",
+      "domain": "nuveq.cloud",
+      "path": "/",
+      "expires": 1790347999,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "apollo-token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3MDgzMSwiaWF0IjoxNzU4ODExOTk4LCJleHAiOjE3OTAzNDc5OTh9.IP9EProHUOVqSnXHSVvA7Ttr2pXIxARayoGYS66f9SM",
+      "domain": "nuveq.cloud",
+      "path": "/",
+      "expires": 1790347998,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://nuveq.cloud",
+      "localStorage": [
+        {
+          "name": "auth._token_expiration.local",
+          "value": "1790347998000"
+        },
+        {
+          "name": "token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3MDgzMSwiaWF0IjoxNzU4ODExOTk4LCJleHAiOjE3OTAzNDc5OTh9.IP9EProHUOVqSnXHSVvA7Ttr2pXIxARayoGYS66f9SM"
+        },
+        {
+          "name": "auth.strategy",
+          "value": "local"
+        },
+        {
+          "name": "auth._token.local",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3MDgzMSwiaWF0IjoxNzU4ODExOTk4LCJleHAiOjE3OTAzNDc5OTh9.IP9EProHUOVqSnXHSVvA7Ttr2pXIxARayoGYS66f9SM"
+        }
+      ]
+    }
+  ]
+}

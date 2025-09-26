@@ -20,9 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ROOMS, BOOKING_DURATIONS, getRoomById } from "@/lib/constants/rooms";
+import { ROOMS, BOOKING_DURATIONS, getRoomById } from "@/data/room-constants";
 import { Building2, Clock, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 interface RoomSelectorProps {
   selectedRoomId?: string;

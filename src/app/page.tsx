@@ -38,7 +38,7 @@ export default function Home() {
       <AnimatedNavFramer />
       <Hero
         heading="The 500 Social House"
-        description="A collaborative space for AI builders and founders"
+        description="A collaborative space for AI residents and founders"
         buttons={{
           primary: { text: "Register", url: "/register" },
           secondary: { text: "Guide", url: "/guide" },

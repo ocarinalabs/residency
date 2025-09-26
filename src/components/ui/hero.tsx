@@ -62,7 +62,7 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <BlurFade delay={0}>
             <Badge variant="outline" className="mb-4">
-              For AI Builders
+              For AI Residents
             </Badge>
           </BlurFade>
 

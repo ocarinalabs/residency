@@ -20,7 +20,7 @@ export function NuveqAppDownload() {
     "https://play.google.com/store/apps/details?id=cloud.nuveq.mobile_access&pcampaignid=web_share";
 
   return (
-    <Card className="mb-6 border max-w-2xl mx-auto bg-card">
+    <Card className="mb-6 border max-w-2xl mx-auto bg-card rounded-none">
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
           <AlertCircle className="h-5 w-5 text-muted-foreground" />

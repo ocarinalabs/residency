@@ -24,20 +24,24 @@ const cards = [
   {
     title: "Getting Here",
     description:
-      "Location, directions, parking, and transport options to reach 500 Social House.",
+      "Building address, transportation options, and contact information",
     image: "/aicb.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">Location</h3>
       <p class="mb-2">Level 8, Bangunan AICB, 10, Jalan Dato Onn, Kuala Lumpur, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</p>
       <p class="mb-4"><a href="https://share.google/myz9mLNDYnHJAaNKY" class="text-blue-600 dark:text-blue-400 underline">View on Google Maps</a></p>
 
+      <div class="mb-4 flex justify-center">
+        <img src="/location.webp" alt="500 Social House Location Map" class="w-full max-w-[600px] h-auto rounded-lg shadow-md" />
+      </div>
+
       <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
       <h3 class="font-semibold mb-2">Public Transportation</h3>
-      <p class="mb-4">For train commuters, the building is a 1 minute stroll from the Bank Negara KTM Station and a 5 minute walk from the Bandaraya LRT station.</p>
+      <p class="mb-4">For train commuters, the building is a 1-minute stroll from the <a href="https://maps.app.goo.gl/pBjDtL3J2KU6Xbnn9" target="_blank" class="text-blue-600 dark:text-blue-400 underline">Bank Negara KTM Station</a> and a 5-minute walk from the <a href="https://maps.app.goo.gl/XHEsTGxfgdGDySCm7" target="_blank" class="text-blue-600 dark:text-blue-400 underline">Bandaraya LRT Station</a>.</p>
 
       <div class="mb-4">
-        <p class="font-medium mb-2">From Bank Negara KTM Station (1 min, 200m):</p>
+        <p class="font-medium mb-2">From <a href="https://maps.app.goo.gl/pBjDtL3J2KU6Xbnn9" target="_blank" class="text-blue-600 dark:text-blue-400 underline">Bank Negara KTM Station</a> (1 min, 200m):</p>
         <ul class="list-disc list-inside mb-3">
           <li>Take the exit on your left upon exiting the turnstile</li>
           <li>Go down the stairs and walk along the pathway</li>
@@ -47,7 +51,7 @@ const cards = [
       </div>
 
       <div class="mb-4">
-        <p class="font-medium mb-2">From Bandaraya LRT Station (5 min, 350m):</p>
+        <p class="font-medium mb-2">From <a href="https://maps.app.goo.gl/XHEsTGxfgdGDySCm7" target="_blank" class="text-blue-600 dark:text-blue-400 underline">Bandaraya LRT Station</a> (5 min, 350m):</p>
         <ul class="list-disc list-inside mb-3">
           <li>Upon exiting the turnstile, turn right towards Bank Negara Malaysia</li>
           <li>Go down the stairs and walk along the pathway until you see a pedestrian bridge on your right</li>
@@ -60,7 +64,7 @@ const cards = [
       <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
       <h3 class="font-semibold mb-2">Drop-off Point</h3>
-      <p class="mb-4">North Lobby - nearest to the 500 Social House on Level 8</p>
+      <p class="mb-4">North Lobby - nearest to 500 Social House on Level 8</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <img src="/drop-off-1.webp" alt="Drop-off point view 1" class="w-full h-auto rounded-lg shadow-md" />
@@ -71,7 +75,7 @@ const cards = [
       <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
       <h3 class="font-semibold mb-2">Visitor Parking</h3>
-      <p class="mb-2">Follow the "AICB Pedestrian Tunnel" signs to reach the car park lift lobby on Ground floor.</p>
+      <p class="mb-2">Follow the "AICB Pedestrian Tunnel" signs to reach the car park lift lobby on the ground floor.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <img src="/parking-1.webp" alt="AICB Parking view 1" class="w-full aspect-[4/3] object-cover rounded-lg shadow-md" />
@@ -81,7 +85,7 @@ const cards = [
       </div>
 
       <div class="mb-4">
-        <p class="font-medium mb-3">AICB Carpark Rates (Effective from 1st March 2024):</p>
+        <p class="font-medium mb-3"><a href="https://parkinginmalaysia.com/aicb-centre-of-excellence-parking-rate/" target="_blank" class="text-blue-600 dark:text-blue-400 underline">AICB Carpark Rates</a> (Effective from 1st March 2024):</p>
         <div class="overflow-x-auto">
           <table class="w-full caption-bottom text-sm border">
             <thead>
@@ -117,7 +121,7 @@ const cards = [
 
         <p class="font-medium text-sm mb-2">
           <a href="https://maps.app.goo.gl/RoZWeeR7CGKRNRSq7" target="_blank" class="text-blue-600 dark:text-blue-400 underline">ASB Academic</a>
-          <span class="font-normal"> (Monday to Saturday, 8am to 5pm):</span>
+          <span class="font-normal"> (Monday to Saturday, 8AM - 5PM):</span>
         </p>
         <div class="overflow-x-auto mb-3">
           <table class="w-full caption-bottom text-sm border">
@@ -146,30 +150,27 @@ const cards = [
 
         <p class="font-medium text-sm mb-1">
           <a href="https://maps.app.goo.gl/BL4yJKunw17VUovz8" target="_blank" class="text-blue-600 dark:text-blue-400 underline">Sasana Kijang, Bank Negara Malaysia</a>
-          <span class="font-normal"> (450m, 1 min walk):</span>
+          <span class="font-normal"> (450m, 1-minute walk):</span>
         </p>
         <ul class="list-disc list-inside text-sm">
-          <li>Available in LG3, LG4 and LG5</li>
+          <li>Available in LG3, LG4, and LG5</li>
           <li>RM 5 per entry (Touch'n Go card only)</li>
-          <li>Monday 8:00am - 6:30pm</li>
-          <li>Tuesday to Sunday 10:00am - 5:00pm</li>
+          <li>Monday 8:00AM - 6:30PM</li>
+          <li>Tuesday to Sunday 10:00AM - 5:00PM</li>
         </ul>
       </div>
     `,
   },
   {
     title: "Access & Registration",
-    description:
-      "AICB Building access and Nuveq door system registration process.",
+    description: "AICB Building access and door system registration process.",
     image: "/access.webp",
     detailedContent: `
-      <h3 class="font-semibold mb-2">AICB Building Access</h3>
-      <p class="mb-2">Register at North Lobby upon arrival:</p>
+      <h3 class="font-semibold mb-2">AICB Building Access (North Lobby)</h3>
       <ul class="list-disc list-inside mb-4">
-        <li>Register at front desk or kiosk</li>
-        <li>Required document: Identity card or passport</li>
-        <li>Tap visitor badge at turnstile to enter</li>
-        <li>Insert badge into barrier slot to exit</li>
+        <li>Register at the front desk or kiosk with your identity card or passport</li>
+        <li>Tap your visitor badge at the turnstile to enter</li>
+        <li>Insert the badge into the barrier slot to exit</li>
       </ul>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -181,51 +182,112 @@ const cards = [
 
       <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
-      <h3 class="font-semibold mb-2">500 Social House - Nuveq Door System</h3>
-      <p class="mb-4">We have Nuveq Door Access System for Level 8. This is separate from AICB Building Access.</p>
+      <h3 class="font-semibold mb-2">500 Social House Access</h3>
+      <p class="mb-4">We have a door access system in place for 500 Social House on Level 8. Note that this is a separate system from the AICB Building access.</p>
 
-      <div class="mb-4">
-        <p class="font-medium mb-2">To register for door access:</p>
-        <ul class="list-disc list-inside mb-3">
-          <li>Visit <a href="/register" class="text-blue-600 dark:text-blue-400 underline">our registration page</a> and follow the step-by-step guide</li>
-          <li>Once approved, you'll receive an access link via email</li>
-          <li>Remember to keep Bluetooth enabled on your phone</li>
-        </ul>
-      </div>
+      <p class="mb-4">Visit our <a href="/register" class="text-blue-600 dark:text-blue-400 underline">registration page</a> to get started.</p>
 
     `,
   },
   {
-    title: "House Rules & Guidelines",
+    title: "Housekeeping Guidelines",
     description:
-      "Operating policies, WiFi, health & safety, and guidelines for our shared spaces.",
+      "Office policies, WiFi access, workspace etiquette, and facility guidelines",
     image: "/housekeeping.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">Office Support</h3>
-      <p class="mb-4">Our Office Manager will be here to support you on weekdays from 9am-6pm. Should you need any help around the office, please reach out to our Office Manager and/or the Operations team support (Adelyn, Suzi).</p>
+      <p class="mb-4">Our Office Manager will be here to support you on weekdays from 9AM - 6PM. Should you need any help around the office, please reach out to our Office Manager and/or the Operations team (Adelyn, Suzi).</p>
 
       <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
-      <h3 class="font-semibold mb-2">Guest WiFi</h3>
-      <div class="mb-4 p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
-        <p class="mb-1"><strong>ID:</strong> Guest@500Global</p>
-        <p class="mb-1"><strong>Password:</strong> 500Malaysia</p>
-        <p class="mt-2"><a href="https://docs.google.com/document/d/14Zn1xLKYLauUfPhRriIVU-EreJABPergtPM5p-Tu5cY" target="_blank" class="text-blue-600 dark:text-blue-400 underline">View Screen Mirroring Guide</a></p>
+      <h3 class="font-semibold mb-2">Operating Hours & Visitors Policy</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>Office Hours: 9am - 6pm (weekdays)</li>
+        <li>Visitor access: 9am - 5:30pm (weekdays)</li>
+        <li>Submit visitor registration form 2 working days in advance</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">WiFi</h3>
+      <p class="mb-1"><strong>ID:</strong> Guest@500Global</p>
+      <p class="mb-4"><strong>Password:</strong> 500Malaysia</p>
+
+      <div class="mb-4 flex flex-col items-center">
+        <img src="/wifi-qr.webp" alt="WiFi QR Code" class="w-64 h-auto rounded-lg shadow-md" />
+        <p class="mt-2 text-sm text-muted-foreground">Scan to connect to WiFi</p>
       </div>
 
-      <div class="mb-4 flex justify-center">
-        <img src="/wifi-qr.webp" alt="WiFi QR Code" class="w-64 h-auto rounded-lg shadow-md" />
-      </div>
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Workstation</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>Keep your workstation clean and tidy</li>
+        <li>The cleaner will wipe all tables every morning</li>
+        <li>Be wary - eating at your workstation without cleaning crumbs can attract unwanted guests</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Meeting Room Etiquette</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>Follow specified check-in and check-out times</li>
+        <li>Allow a 30-minute gap between meetings for cleaning</li>
+        <li>Switch off electrical appliances and lights after use</li>
+        <li>Eating in meeting rooms is not encouraged</li>
+        <li>Return all borrowed equipment to designated locations</li>
+        <li>Book via Google Calendar</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Pantry Guidelines</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>Water, coffee, and tea are available at the pantry</li>
+        <li>Dispose of any trash in the designated bin under the sink</li>
+        <li>Dispose of leftover food and drinks only in pantry bins</li>
+        <li>Keep the area clean and tidy, and put items back in their original place</li>
+        <li>Switch off lights and electronic devices after use</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Keeping Our Social House Clean</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>Keep common areas and meeting rooms neat and clean</li>
+        <li>After using the pantry or other shared spaces, kindly clean up after yourself</li>
+        <li>Cleaning services available 8:00am to 4:30pm on weekdays</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Health & Safety</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>Practice good personal hygiene - wash/sanitize hands frequently</li>
+        <li>Discard used tissues and masks immediately in bins with lids</li>
+        <li>If sick and must visit, please wear a face mask</li>
+        <li>If exposed to an infectious disease, self-monitor and test</li>
+        <li>Self-quarantine if tested positive</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">No Smoking Policy</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>500 Social House is a non-smoking zone</li>
+        <li>No vaping allowed in any indoor areas</li>
+        <li>Designated smoking area: Ground floor at North Lobby, near the fountain</li>
+      </ul>
 
       <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
       <h3 class="font-semibold mb-2">Save Electricity</h3>
-      <p class="mb-2">If you are the last to leave the office, please switch off all lights at:</p>
+      <p class="mb-2">If you are the last to leave the office, please switch off all the lights around the office. The switches are located:</p>
       <ul class="list-disc list-inside mb-4">
-        <li>Entrance switch</li>
-        <li>500 Team - Main Section</li>
-        <li>AI Residency Section</li>
-        <li>Communal Pendant Light</li>
+        <li>AI Residency</li>
+        <li>Main Entrance</li>
+        <li>500 Office</li>
+        <li>Communal Pendant</li>
       </ul>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -237,151 +299,137 @@ const cards = [
 
       <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
-      <h3 class="font-semibold mb-2">Keeping Our Social House Clean</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Contribute to keeping common areas and meeting rooms neat and clean</li>
-        <li>After using the pantry or other shared spaces, kindly clean up after yourself</li>
-        <li>Cleaner support available 8:00am to 4:30pm on weekdays</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
-      <h3 class="font-semibold mb-2">Pantry Guidelines</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Water, coffee and tea are available at the pantry</li>
-        <li>Dispose of any trash in designated bin under the sink</li>
-        <li>Leftover food and drinks to be disposed only in pantry bins</li>
-        <li>Keep the area clean and tidy, put items back in original place</li>
-        <li>Switch off lights and electronic devices after use</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
-      <h3 class="font-semibold mb-2">Workstation</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Keep your workstation clean and tidy</li>
-        <li>Cleaner will wipe all tables every morning</li>
-        <li>Be wary - eating at workstation without cleaning crumbs can attract unwanted guests</li>
-      </ul>
-
-      <div class="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg">
-        <p class="font-medium text-blue-700 dark:text-blue-300 mb-1">💡 Remember</p>
-        <ul class="space-y-1">
-          <li>• Clean up immediately after using shared spaces</li>
-          <li>• Label your food in the fridge</li>
-          <li>• Report any maintenance issues to Office Manager</li>
-        </ul>
-      </div>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
-      <h3 class="font-semibold mb-2">Operating Hours & Visitors Policy</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Office Operation: 9am - 6pm (weekdays)</li>
-        <li>Visitor access: 9am - 5:30pm (weekdays)</li>
-        <li>Submit visitor registration form 2 working days prior</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
-      <h3 class="font-semibold mb-2">Health & Safety</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Practice good personal hygiene - wash/sanitize hands frequently</li>
-        <li>Discard used tissues & masks immediately in bins with lids</li>
-        <li>If sick and must visit, please wear a face mask</li>
-        <li>If exposed to infectious disease, self-monitor and test</li>
-        <li>Self-quarantine if tested positive</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
-      <h3 class="font-semibold mb-2">Meeting Room Etiquette</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Follow specified check-in and check-out times</li>
-        <li>Allow 30 min gap between meetings for cleaning</li>
-        <li>Switch off electrical appliances and lights after use</li>
-        <li>Eating in meeting rooms not encouraged</li>
-        <li>Return all borrowed equipment to designated locations</li>
-        <li>Book via Google Calendar</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
-      <h3 class="font-semibold mb-2">No Smoking Policy</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>The Social House is a "non-smoking" zone</li>
-        <li>No vaping allowed in any indoor areas</li>
-        <li>Designated smoking area: Ground floor at North lobby, near fountain</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
       <h3 class="font-semibold mb-2">FAQs</h3>
       <div class="space-y-3 mb-4">
         <div>
           <p class="font-medium">Are there TVs/Projectors available?</p>
-          <p class="text-sm">TVs in Las Vegas and Davos rooms. Projector in London room. Connect via HDMI cable.</p>
+          <p class="text-sm">TVs in Las Vegas and Davos rooms. Projector in London room. Connect via HDMI cable. <a href="https://docs.google.com/document/d/14Zn1xLKYLauUfPhRriIVU-EreJABPergtPM5p-Tu5cY" target="_blank" class="text-blue-600 dark:text-blue-400 underline">View Screen Mirroring Guide</a></p>
         </div>
         <div>
           <p class="font-medium">Can seating be rearranged?</p>
-          <p class="text-sm">Best to keep arrangement as is. If adjusted, must return to original setup. Company liable for any damages.</p>
+          <p class="text-sm">It's best to keep the arrangement as is. If adjusted, you must return it to the original setup. Please note that your company will be liable for any costs incurred, including damages to furniture, flooring, or stains.</p>
         </div>
         <div>
           <p class="font-medium">Can we bring food into meeting rooms?</p>
-          <p class="text-sm">Yes, dining table at living room available. Clean up after meals. Food delivery to North lobby. Last trash collection at 4:30 PM.</p>
+          <p class="text-sm">Yes, the dining table in the living room is available. Please clean up after meals. Food deliveries arrive at the North Lobby. Last trash collection is at 4:30 PM.</p>
         </div>
       </div>
     `,
   },
   {
     title: "Workspace Layout",
-    description:
-      "Meeting rooms, work areas, and common spaces at 500 Social House.",
+    description: "Coworking spaces, common areas, and bookable meeting rooms",
     image: "/workspace.webp",
     detailedContent: `
       <div class="mb-4 flex justify-center">
-        <img src="/workspace-1.webp" alt="500 Social House workspace" class="w-full max-w-[400px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+        <img src="/workspace-1.webp" alt="500 Social House workspace" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
       </div>
-
-      <h3 class="font-semibold mb-2">Areas</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li><strong>AI Builders area</strong> - Dedicated workspace for AI teams</li>
-        <li><strong>500 Team area</strong> - Core team workspace</li>
-        <li><strong>Common areas</strong> - Living space and communal dining</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
-
-      <h3 class="font-semibold mb-2">Meeting Rooms (Bookable via Google Calendar)</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li><strong>Abu Dhabi</strong> (4-5 pax) - Smart TV, HDMI</li>
-        <li><strong>London</strong> (8-10 pax) - Whiteboard, monitor, projector, HDMI</li>
-        <li><strong>Davos</strong> (10+ pax) - Whiteboard, Smart TV, HDMI</li>
-      </ul>
-
-      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
 
       <h3 class="font-semibold mb-2">Coworking Areas</h3>
       <ul class="list-disc list-inside mb-4">
-        <li>Singapore, Bangkok, Tokyo, Seoul</li>
-        <li>Cairo, Riyadh, Miami</li>
-        <li>Green Area - Common area for collaboration</li>
-        <li>Living Space - Relaxation and informal meetings</li>
-        <li>Communal Dining - Shared meals and networking</li>
+        <li>Singapore (4-6 pax)</li>
+        <li>Bangkok (2-4 pax, unavailable)</li>
+        <li>Seoul (3-4 pax)</li>
+        <li>Cairo (1 pax, unavailable)</li>
+        <li>Riyadh (1 pax, unavailable)</li>
+        <li>Miami (2-3 pax)</li>
+        <li>Tokyo (3-4 pax, unavailable)</li>
       </ul>
 
-      <div class="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg">
-        <p class="font-medium text-blue-700 dark:text-blue-300 mb-1">💡 Tips</p>
-        <ul class="space-y-1">
-          <li>• Book meeting rooms via Google Calendar</li>
-          <li>• Check room amenities before booking</li>
-          <li>• Larger rooms for team meetings and presentations</li>
-        </ul>
+      <h3 class="font-semibold mb-2">Common Areas</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li>Zen Garden (4-6 pax)</li>
+        <li>Window Seats (2-6 pax)</li>
+        <li>Living Area</li>
+        <li>Communal Dining</li>
+      </ul>
+
+      <h3 class="font-semibold mb-2">Coworking Areas</h3>
+      <div class="space-y-4 mb-4">
+        <div class="flex flex-col items-center">
+          <img src="/room-singapore.webp" alt="Singapore Coworking Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Singapore</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-bangkok.webp" alt="Bangkok Coworking Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Bangkok</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-seoul.webp" alt="Seoul Coworking Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Seoul</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-cairo.webp" alt="Cairo Coworking Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Cairo</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-riyadh.webp" alt="Riyadh Coworking Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Riyadh</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-miami.webp" alt="Miami Coworking Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Miami</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-tokyo.webp" alt="Tokyo Coworking Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Tokyo</p>
+        </div>
+      </div>
+
+      <h3 class="font-semibold mb-2 mt-4">Common Areas</h3>
+      <div class="space-y-4 mb-4">
+        <div class="flex flex-col items-center">
+          <img src="/room-green.webp" alt="Zen Garden" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <img src="/room-green-2.webp" alt="Zen Garden 2" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md mt-2" />
+          <p class="mt-2 text-sm text-muted-foreground">Zen Garden</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-living.webp" alt="Living Area" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Living Area</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-dining.webp" alt="Communal Dining" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Communal Dining</p>
+        </div>
+      </div>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Meeting Rooms</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li><strong>Miami</strong> (3 pax)</li>
+        <li><strong>Tokyo</strong> (3-4 pax, unavailable)<br/>Amenities: Whiteboard, Meta Portal</li>
+        <li><strong>Abu Dhabi</strong> (4-5 pax)<br/>Amenities: Smart TV, HDMI</li>
+        <li><strong>London</strong> (8-10 pax)<br/>Amenities: Whiteboard, Monitor, Projector, Smart TV, HDMI, Meta Portal</li>
+        <li><strong>Davos</strong> (10 pax and above)<br/>Amenities: Whiteboard, Smart TV, HDMI</li>
+      </ul>
+
+      <div class="space-y-4 mb-4">
+        <div class="flex flex-col items-center">
+          <img src="/room-miami.webp" alt="Miami Meeting Room" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Miami</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-tokyo.webp" alt="Tokyo Meeting Room" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Tokyo</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-abudhabi.webp" alt="Abu Dhabi Meeting Room" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Abu Dhabi</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-london.webp" alt="London Meeting Room" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">London</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/room-davos.webp" alt="Davos Meeting Room" class="w-full max-w-[500px] aspect-[4/3] object-cover rounded-lg shadow-md" />
+          <p class="mt-2 text-sm text-muted-foreground">Davos</p>
+        </div>
       </div>
     `,
   },
   {
-    title: "Procedures",
+    title: "Visitor Registration and Booking",
     description:
       "Visitor registration and meeting room booking via Google Calendar.",
     image:
@@ -411,9 +459,9 @@ const cards = [
 
       <h3 class="font-semibold mb-2">What Happens Next?</h3>
       <ul class="list-disc list-inside mb-4">
-        <li>Information added to Nuveq portal by Office Manager</li>
+        <li>Information added to the system by Office Manager</li>
         <li>Individual access links sent via email/WhatsApp</li>
-        <li>Email subject: "Welcome to Nuveq Access!" (check SPAM folder)</li>
+        <li>Access link sent via email (check SPAM folder)</li>
         <li>VIPs handled by GP/Partner's Executive Assistant</li>
         <li>AICB Building registration required at North Tower Lobby</li>
       </ul>
@@ -441,92 +489,55 @@ const cards = [
           <li>Confirm booking</li>
         </ol>
       </div>
-
-      <div class="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg mb-4">
-        <p class="font-medium text-blue-700 dark:text-blue-300 mb-1">💡 Tips</p>
-        <ul class="space-y-1">
-          <li>• Book early to secure preferred rooms</li>
-          <li>• Cancel promptly if plans change</li>
-          <li>• Check room amenities before booking</li>
-        </ul>
-      </div>
-
-      <div class="bg-red-50 dark:bg-red-950/30 p-3 rounded-lg">
-        <p class="font-medium text-red-700 dark:text-red-300 mb-1">⚠️ Important</p>
-        <ul class="space-y-1">
-          <li>• Room unavailability means it's already booked</li>
-          <li>• 2 working days advance notice required</li>
-          <li>• Good hospitality expected from hosts</li>
-        </ul>
-      </div>
     `,
   },
   {
     title: "Emergency Response Plan",
     description:
       "Fire drill procedures, evacuation routes, and safety protocols.",
-    image:
-      "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=400&h=300&fit=crop",
+    image: "/evacuation.webp",
     detailedContent: `
-      <h3 class="font-semibold mb-2">Fire Drill Procedures</h3>
+      <h3 class="font-semibold mb-2">Fire Drill Announcement Procedures</h3>
 
       <div class="mb-4">
-        <p class="font-medium mb-2">Upon 1st Announcement:</p>
+        <p class="font-medium mb-2">First Announcement - Standby Phase:</p>
         <ul class="list-disc list-inside mb-3">
-          <li>All team members on standby for 2nd announcement</li>
-          <li>Be prepared for "Full Evacuation" or stand-down if false alarm</li>
-          <li>Shut down all electrical appliances if possible</li>
-          <li>Gather all personal valuables</li>
-          <li>Ladies advised not to wear high heels (if spare shoes available)</li>
-          <li>Do not run, hold handrails while descending stairs</li>
+          <li>All team members should remain on standby for the second announcement</li>
+          <li>Prepare for either full evacuation or stand-down if false alarm</li>
+          <li>Shut down electrical appliances when possible</li>
+          <li>Gather personal belongings and valuables</li>
+          <li>Wear appropriate footwear for using stairs (avoid high heels)</li>
+          <li>Remain calm and prepare to evacuate safely</li>
         </ul>
       </div>
 
       <div class="mb-4">
-        <p class="font-medium mb-2">Upon 2nd Announcement:</p>
+        <p class="font-medium mb-2">Second Announcement - Full Evacuation:</p>
         <ul class="list-disc list-inside mb-3">
-          <li>Start evacuating the office immediately</li>
-          <li>Proceed to nearest assembly point (North/South)</li>
-          <li>Follow Standby Floor Warden to assembly point</li>
-          <li>Main Floor Warden will be last to evacuate</li>
-          <li>Ensure all office doors are secured</li>
+          <li>Begin evacuation immediately</li>
+          <li>Proceed to the nearest assembly point (North or South)</li>
+          <li>Follow the Standby Floor Warden to the assembly point</li>
+          <li>Walk calmly - do not run</li>
+          <li>Hold handrails when using stairs</li>
+          <li>Main Floor Warden will be the last person to evacuate, ensuring all doors are secured</li>
         </ul>
       </div>
 
       <h3 class="font-semibold mb-2">Assembly Points</h3>
       <ul class="list-disc list-inside mb-4">
-        <li>North Assembly Point - North Lobby area</li>
-        <li>South Assembly Point - South Lobby area</li>
-        <li>Follow emergency floor plan posted on Level 8</li>
+        <li><strong>North Assembly Point:</strong> North Lobby area</li>
+        <li><strong>South Assembly Point:</strong> South Lobby area</li>
+        <li>Refer to the emergency floor plan posted on Level 8</li>
       </ul>
 
-      <h3 class="font-semibold mb-2">Emergency Exits</h3>
+      <h3 class="font-semibold mb-2">Emergency Exit Guidelines</h3>
       <ul class="list-disc list-inside mb-4">
-        <li>Emergency exits marked in green</li>
-        <li>Familiarize yourself with nearest exits</li>
-        <li>Do not use elevators during emergencies</li>
-        <li>Use stairwells for evacuation</li>
+        <li>All emergency exits are marked with green signage</li>
+        <li>Familiarize yourself with the nearest exit locations</li>
+        <li><strong>Never use elevators</strong> during fire emergencies</li>
+        <li>Use designated stairwells for safe evacuation</li>
+        <li>Do not re-enter the building until the all-clear is given</li>
       </ul>
-
-      <div class="bg-red-50 dark:bg-red-950/30 p-3 rounded-lg mb-4">
-        <p class="font-medium text-red-700 dark:text-red-300 mb-1">⚠️ Critical Safety Rules</p>
-        <ul class="space-y-1">
-          <li>• NEVER use elevators during fire emergencies</li>
-          <li>• Do not re-enter building until all clear given</li>
-          <li>• Follow Floor Warden instructions at all times</li>
-          <li>• Stay calm and assist others if needed</li>
-        </ul>
-      </div>
-
-      <div class="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg">
-        <p class="font-medium text-blue-700 dark:text-blue-300 mb-1">💡 Preparation Tips</p>
-        <ul class="space-y-1">
-          <li>• Know your nearest emergency exit</li>
-          <li>• Keep emergency contact numbers saved</li>
-          <li>• Participate in all fire drills</li>
-          <li>• Report any blocked exits immediately</li>
-        </ul>
-      </div>
     `,
   },
   {
@@ -556,8 +567,7 @@ const cards = [
   },
   {
     title: "Where to Eat",
-    description:
-      "Gigi Coffee, food courts, and delivery options near 500 Social House.",
+    description: "Cafes, restaurants, and food delivery options nearby",
     image: "/eat.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">In AICB Building</h3>
@@ -577,7 +587,6 @@ const cards = [
         <ul class="list-disc list-inside mb-3">
           <li>Good quality food with decent portions at great prices</li>
           <li>Wide variety of options - Western, Eastern, rice dishes, desserts</li>
-          <li><strong>20% tenant discount</strong> - mention you're from 500</li>
         </ul>
       </div>
 
@@ -621,16 +630,6 @@ const cards = [
           <li>Encouraged to personally collect when possible</li>
           <li>Reduces strain on lobby staff</li>
           <li>Ensures prompt inspection of items</li>
-        </ul>
-      </div>
-
-      <div class="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg mb-4">
-        <p class="font-medium text-blue-700 dark:text-blue-300 mb-1">💡 Delivery Tips</p>
-        <ul class="space-y-1">
-          <li>• Provide "AICB Building" as landmark</li>
-          <li>• Include Level 8, 500 Social House in address</li>
-          <li>• Add your contact number for riders</li>
-          <li>• Specify North Lobby for pickup</li>
         </ul>
       </div>
     `,
@@ -684,7 +683,7 @@ export default function GuidePage() {
           <BlurFade delay={0.05}>
             <div className="text-center max-w-2xl mx-auto mb-4">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-                Office Guide
+                House Guide
               </h1>
               <p className="text-muted-foreground text-lg">
                 Everything you need to know about 500 Social House

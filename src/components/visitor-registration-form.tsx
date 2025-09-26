@@ -55,6 +55,9 @@ const formSchema = z.object({
     message: "Please provide a reason for your visit.",
   }),
   company: z.string().optional(),
+  invitedBy: z.string().min(2, {
+    message: "Please provide the name of the person who invited you.",
+  }),
   selectedRoom: z.string().optional(),
   bookingDuration: z.string().optional(),
 });
@@ -75,6 +78,7 @@ export function VisitorRegistrationForm() {
       vehicleNumber: "",
       reasonToVisit: "Co-working @ 500 Social House",
       company: "",
+      invitedBy: "",
       selectedRoom: "",
       bookingDuration: "2",
     },
@@ -93,6 +97,7 @@ export function VisitorRegistrationForm() {
         form.setValue("vehicleNumber", parsed.vehicleNumber || "");
         form.setValue("reasonToVisit", "Co-working @ 500 Social House");
         form.setValue("company", parsed.company || "");
+        form.setValue("invitedBy", parsed.invitedBy || "");
         if (parsed.selectedRoom) {
           form.setValue("selectedRoom", parsed.selectedRoom);
         }
@@ -129,6 +134,7 @@ export function VisitorRegistrationForm() {
         phoneNumber: values.phoneNumber,
         vehicleNumber: values.vehicleNumber,
         company: values.company,
+        invitedBy: values.invitedBy,
         selectedRoom: values.selectedRoom,
         bookingDuration: values.bookingDuration,
       })
@@ -153,7 +159,9 @@ export function VisitorRegistrationForm() {
         visitStart: visitStart,
         visitEnd: visitEnd,
         vehicleNumber: values.vehicleNumber || null,
-        reason: values.reasonToVisit,
+        reason: values.invitedBy
+          ? `${values.reasonToVisit}_${values.invitedBy}`
+          : values.reasonToVisit,
         companyName: values.company || "500 Social House",
         inviterEmail: null,
         liftGroupId: null,
@@ -206,7 +214,7 @@ export function VisitorRegistrationForm() {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-card rounded-lg border">
+    <div className="w-full max-w-md mx-auto p-6 bg-card rounded-none border">
       {isSubmitted ? (
         // Success state
         <div className="flex flex-col items-center justify-center py-8 space-y-4">
@@ -368,6 +376,27 @@ export function VisitorRegistrationForm() {
                     <FormControl>
                       <Input
                         placeholder="Acme Inc."
+                        {...field}
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="invitedBy"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Invited By
+                      <span className="text-red-500 align-top text-xs">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="John Doe"
                         {...field}
                         disabled={isLoading}
                       />

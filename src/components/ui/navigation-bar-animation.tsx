@@ -7,7 +7,7 @@ import {
   useMotionValueEvent,
   Variants,
 } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import {

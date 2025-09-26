@@ -7,7 +7,7 @@ import { RoomData } from "@/lib/constants/rooms";
 import { Users, MapPin, Check, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 interface RoomCardProps {
   room: RoomData;

@@ -10,11 +10,9 @@ import {
   IconHome,
   IconSearch,
   IconSettings,
-  IconUserCheck,
   IconUsers,
 } from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
@@ -47,19 +45,19 @@ const data = {
       items: [
         {
           title: "Today's Visitors",
-          url: "#",
+          url: "/visitors/today",
         },
         {
           title: "Future Visitors",
-          url: "#",
+          url: "/visitors/future",
         },
         {
           title: "Pending Approvals",
-          url: "#",
+          url: "/visitors/pending",
         },
         {
           title: "Visitor Database",
-          url: "#",
+          url: "/visitors/database",
         },
       ],
     },
@@ -134,18 +132,6 @@ const data = {
       icon: IconSearch,
     },
   ],
-  quickActions: [
-    {
-      name: "Approve Visitor",
-      url: "#",
-      icon: IconUserCheck,
-    },
-    {
-      name: "Check Building",
-      url: "#",
-      icon: IconBuildingCommunity,
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -170,9 +156,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {data.quickActions && data.quickActions.length > 0 && (
-          <NavDocuments items={data.quickActions} label="Quick Actions" />
-        )}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

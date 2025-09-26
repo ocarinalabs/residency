@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { IconCheck, IconDotsVertical, IconUserX, IconX } from "@tabler/icons-react";
+import {
+  IconCheck,
+  IconDotsVertical,
+  IconUserX,
+  IconX,
+} from "@tabler/icons-react";
 import { Loader2 } from "lucide-react";
 import {
   ColumnDef,
@@ -225,222 +230,210 @@ export const visitorColumns: ColumnDef<VisitorData>[] = [
 
 // Separate component for actions cell to avoid hooks in non-component function
 function ActionCell({ row }: { row: Row<VisitorData> }) {
-      const visitor = row.original;
-      const status = getVisitorStatus(visitor.visitFrom, visitor.visitTill);
-      const [detailsOpen, setDetailsOpen] = React.useState(false);
-      const [deleteOpen, setDeleteOpen] = React.useState(false);
-      const [isDeleting, setIsDeleting] = React.useState(false);
+  const visitor = row.original;
+  const status = getVisitorStatus(visitor.visitFrom, visitor.visitTill);
+  const [detailsOpen, setDetailsOpen] = React.useState(false);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
-      const determineVisitorType = (visitor: VisitorData): string => {
-        const now = new Date();
-        const visitFrom = new Date(visitor.visitFrom);
-        const visitTill = new Date(visitor.visitTill);
+  const determineVisitorType = (visitor: VisitorData): string => {
+    const now = new Date();
+    const visitFrom = new Date(visitor.visitFrom);
+    const visitTill = new Date(visitor.visitTill);
 
-        if (!visitor.approvedBy) return "pending";
-        if (visitFrom <= now && visitTill >= now) return "today";
-        if (visitFrom > now) return "future";
-        return "today";
-      };
+    if (!visitor.approvedBy) return "pending";
+    if (visitFrom <= now && visitTill >= now) return "today";
+    if (visitFrom > now) return "future";
+    return "today";
+  };
 
-      const handleDelete = async () => {
-        setIsDeleting(true);
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      const response = await fetch("/api/browserless/visitors/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          credential: visitor.credential,
+          visitorType: determineVisitorType(visitor),
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Visitor deleted successfully");
+        setDeleteOpen(false);
+
+        // Sync data from Nuveq after deletion
         try {
-          const response = await fetch("/api/browserless/visitors/delete", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              credential: visitor.credential,
-              visitorType: determineVisitorType(visitor),
-            }),
-          });
-
-          if (response.ok) {
-            toast.success("Visitor deleted successfully");
-            setDeleteOpen(false);
-
-            // Sync data from Nuveq after deletion
-            try {
-              await fetch("/api/visitors/sync", { method: "POST" });
-            } catch (syncError) {
-              console.error("Failed to sync after deletion:", syncError);
-            }
-
-            // Then reload to show updated data
-            window.location.reload();
-          } else {
-            const error = await response.json();
-            toast.error(error.message || "Failed to delete visitor");
-          }
-        } catch {
-          toast.error("Failed to delete visitor");
-        } finally {
-          setIsDeleting(false);
+          await fetch("/api/visitors/sync", { method: "POST" });
+        } catch (syncError) {
+          console.error("Failed to sync after deletion:", syncError);
         }
-      };
 
-      return (
-        <>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <IconDotsVertical className="h-4 w-4" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {status.label === "Expected" && (
-                <>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      toast.success(`Checked in ${visitor.name}`);
-                    }}
-                  >
-                    <IconCheck className="mr-2 h-4 w-4" />
-                    Check In
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                </>
-              )}
-              {status.label === "Checked In" && (
-                <>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      toast.success(`Checked out ${visitor.name}`);
-                    }}
-                  >
-                    <IconUserX className="mr-2 h-4 w-4" />
-                    Check Out
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                </>
-              )}
-              <DropdownMenuItem onClick={() => setDetailsOpen(true)}>
-                View Details
+        // Then reload to show updated data
+        window.location.reload();
+      } else {
+        const error = await response.json();
+        toast.error(error.message || "Failed to delete visitor");
+      }
+    } catch {
+      toast.error("Failed to delete visitor");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <IconDotsVertical className="h-4 w-4" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          {status.label === "Expected" && (
+            <>
+              <DropdownMenuItem
+                onClick={() => {
+                  toast.success(`Checked in ${visitor.name}`);
+                }}
+              >
+                <IconCheck className="mr-2 h-4 w-4" />
+                Check In
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+            </>
+          )}
+          {status.label === "Checked In" && (
+            <>
               <DropdownMenuItem
-                className="text-destructive"
-                onClick={() => setDeleteOpen(true)}
+                onClick={() => {
+                  toast.success(`Checked out ${visitor.name}`);
+                }}
               >
-                Delete
+                <IconUserX className="mr-2 h-4 w-4" />
+                Check Out
               </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <DropdownMenuSeparator />
+            </>
+          )}
+          <DropdownMenuItem onClick={() => setDetailsOpen(true)}>
+            View Details
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="text-destructive"
+            onClick={() => setDeleteOpen(true)}
+          >
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
-          <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
-            <DialogContent className="max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>{visitor.name}</DialogTitle>
-                <DialogDescription>Visitor Details</DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-muted-foreground">Company</Label>
-                    <p className="font-medium">
-                      {visitor.company || "Individual"}
-                    </p>
-                  </div>
-                  <div>
-                    <Label className="text-muted-foreground">Invited By</Label>
-                    <p className="font-medium">{visitor.invitedBy || "N/A"}</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-muted-foreground">Visit From</Label>
-                    <p className="font-medium">{visitor.visitFrom}</p>
-                  </div>
-                  <div>
-                    <Label className="text-muted-foreground">Visit Till</Label>
-                    <p className="font-medium">{visitor.visitTill}</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-muted-foreground">Site</Label>
-                    <p className="font-medium">
-                      {visitor.site || "500 Social House"}
-                    </p>
-                  </div>
-                  <div>
-                    <Label className="text-muted-foreground">
-                      Visitor Type
-                    </Label>
-                    <p className="font-medium">
-                      {visitor.visitorType || "Guest"}
-                    </p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-muted-foreground">Credential</Label>
-                    <p className="font-medium">{visitor.credential || "N/A"}</p>
-                  </div>
-                  <div>
-                    <Label className="text-muted-foreground">
-                      Vehicle Number
-                    </Label>
-                    <p className="font-medium">
-                      {visitor.vehicleNumber || "N/A"}
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <Label className="text-muted-foreground">
-                    Reason for Visit
-                  </Label>
-                  <p className="font-medium">
-                    {visitor.reasonForVisit || "Co-working @ 500 Social House"}
-                  </p>
-                </div>
-                <div>
-                  <Label className="text-muted-foreground">Approved By</Label>
-                  <p className="font-medium">
-                    {visitor.approvedBy || "Pending Approval"}
-                  </p>
-                </div>
+      <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>{visitor.name}</DialogTitle>
+            <DialogDescription>Visitor Details</DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-muted-foreground">Company</Label>
+                <p className="font-medium">{visitor.company || "Individual"}</p>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setDetailsOpen(false)}>
-                  Close
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+              <div>
+                <Label className="text-muted-foreground">Invited By</Label>
+                <p className="font-medium">{visitor.invitedBy || "N/A"}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-muted-foreground">Visit From</Label>
+                <p className="font-medium">{visitor.visitFrom}</p>
+              </div>
+              <div>
+                <Label className="text-muted-foreground">Visit Till</Label>
+                <p className="font-medium">{visitor.visitTill}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-muted-foreground">Site</Label>
+                <p className="font-medium">
+                  {visitor.site || "500 Social House"}
+                </p>
+              </div>
+              <div>
+                <Label className="text-muted-foreground">Visitor Type</Label>
+                <p className="font-medium">{visitor.visitorType || "Guest"}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-muted-foreground">Credential</Label>
+                <p className="font-medium">{visitor.credential || "N/A"}</p>
+              </div>
+              <div>
+                <Label className="text-muted-foreground">Vehicle Number</Label>
+                <p className="font-medium">{visitor.vehicleNumber || "N/A"}</p>
+              </div>
+            </div>
+            <div>
+              <Label className="text-muted-foreground">Reason for Visit</Label>
+              <p className="font-medium">
+                {visitor.reasonForVisit || "Co-working @ 500 Social House"}
+              </p>
+            </div>
+            <div>
+              <Label className="text-muted-foreground">Approved By</Label>
+              <p className="font-medium">
+                {visitor.approvedBy || "Pending Approval"}
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDetailsOpen(false)}>
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
-          <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Delete Visitor</DialogTitle>
-                <DialogDescription>
-                  Are you sure you want to delete {visitor.name}? This action
-                  cannot be undone.
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setDeleteOpen(false)}>
-                  Cancel
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={handleDelete}
-                  disabled={isDeleting}
-                >
-                  {isDeleting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Deleting...
-                    </>
-                  ) : (
-                    "Delete"
-                  )}
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </>
-      );
+      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Visitor</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete {visitor.name}? This action cannot
+              be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
 }
 
 // Columns specifically for pending visitors with additional fields

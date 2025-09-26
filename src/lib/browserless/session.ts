@@ -148,8 +148,12 @@ class BrowserlessSessionManager {
     }
 
     console.log("Successfully logged into Nuveq");
-    const dataWithCookies = result.data as { cookies?: { cookies?: unknown[] } };
-    console.log(`Cookies set: ${dataWithCookies.cookies?.cookies?.length || 0}`);
+    const dataWithCookies = result.data as {
+      cookies?: { cookies?: unknown[] };
+    };
+    console.log(
+      `Cookies set: ${dataWithCookies.cookies?.cookies?.length || 0}`
+    );
   }
 
   private async loginToNuveq(session: BrowserlessSession): Promise<void> {
@@ -247,12 +251,22 @@ class BrowserlessSessionManager {
 
       // Format cookies for GraphQL (not JSON)
       const cookiesGraphQL = authState.cookies
-        .map((cookie: { name: string; value: string; domain: string; path: string; expires: number; httpOnly: boolean; secure: boolean; sameSite: string }) => {
-          // Escape string values properly
-          const escapeValue = (str: string) =>
-            str.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+        .map(
+          (cookie: {
+            name: string;
+            value: string;
+            domain: string;
+            path: string;
+            expires: number;
+            httpOnly: boolean;
+            secure: boolean;
+            sameSite: string;
+          }) => {
+            // Escape string values properly
+            const escapeValue = (str: string) =>
+              str.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 
-          return `{
+            return `{
           name: "${escapeValue(cookie.name)}"
           value: "${escapeValue(cookie.value)}"
           domain: "${escapeValue(cookie.domain)}"
@@ -262,7 +276,8 @@ class BrowserlessSessionManager {
           secure: ${cookie.secure}
           sameSite: "${cookie.sameSite}"
         }`;
-        })
+          }
+        )
         .join(",\n        ");
 
       // Use BQL to set cookies from saved state

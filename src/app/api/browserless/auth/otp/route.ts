@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { Browser, Page } from 'playwright';
-import * as path from 'path';
+import { Browser, Page } from "playwright";
+import * as path from "path";
 
 export async function POST(request: Request) {
   try {

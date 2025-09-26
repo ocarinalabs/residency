@@ -88,9 +88,9 @@ class NuveqScraper {
     const query = this.buildScrapeQuery(pageUrl);
 
     try {
-      const data = await sessionManager.executeQuery(query) as {
+      const data = (await sessionManager.executeQuery(query)) as {
         checkNoData?: { value: string };
-        scrapeData?: { value: Visitor[] }
+        scrapeData?: { value: Visitor[] };
       };
 
       if (data.checkNoData?.value) {

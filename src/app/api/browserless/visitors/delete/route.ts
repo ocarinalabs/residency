@@ -62,12 +62,19 @@ export async function POST(request: Request) {
 
     try {
       // Use cookies directly from auth state
-      const cookieArray = authState.cookies.map((c: { name: string; value: string; domain?: string; path?: string }) => ({
-        name: c.name,
-        value: c.value,
-        domain: c.domain || ".nuveq.cloud",
-        path: c.path || "/",
-      }));
+      const cookieArray = authState.cookies.map(
+        (c: {
+          name: string;
+          value: string;
+          domain?: string;
+          path?: string;
+        }) => ({
+          name: c.name,
+          value: c.value,
+          domain: c.domain || ".nuveq.cloud",
+          path: c.path || "/",
+        })
+      );
 
       // Create context with cookies
       const context = await browser.newContext({

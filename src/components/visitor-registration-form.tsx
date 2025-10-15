@@ -13,11 +13,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useState, useEffect, useCallback } from "react";
 import { Loader2, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Calendar24 } from "@/components/ui/calendar-date";
+import Link from "next/link";
 // import { RoomSelector } from "./room-selector";
+
+const VALIDATION_MESSAGES = {
+  GUIDELINES_REQUIRED: "You must agree to the guidelines to register",
+} as const;
+
+const ROUTES = {
+  GUIDE: "/guide",
+} as const;
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -53,6 +63,9 @@ const formSchema = z.object({
   }),
   selectedRoom: z.string().optional(),
   bookingDuration: z.string().optional(),
+  agreeToGuidelines: z.boolean().refine((val) => val === true, {
+    message: VALIDATION_MESSAGES.GUIDELINES_REQUIRED,
+  }),
 });
 
 export function VisitorRegistrationForm() {
@@ -61,6 +74,7 @@ export function VisitorRegistrationForm() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
     defaultValues: {
       fullName: "",
       email: "",
@@ -74,6 +88,7 @@ export function VisitorRegistrationForm() {
       invitedBy: "",
       selectedRoom: "",
       bookingDuration: "2",
+      agreeToGuidelines: false,
     },
   });
 
@@ -420,7 +435,44 @@ export function VisitorRegistrationForm() {
                 )}
               />
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <FormField
+                control={form.control}
+                name="agreeToGuidelines"
+                render={({ field }) => {
+                  const hasAgreed = field.value;
+
+                  return (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={hasAgreed}
+                          onCheckedChange={field.onChange}
+                          disabled={isLoading}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel className="text-sm font-normal">
+                          <Link
+                            href={ROUTES.GUIDE}
+                            target="_blank"
+                            className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300"
+                          >
+                            I agree to abide by the community and housekeeping guidelines
+                          </Link>
+                          <span className="text-red-500 align-top text-xs">*</span>
+                        </FormLabel>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  );
+                }}
+              />
+
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isLoading || !form.formState.isValid}
+              >
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -190,6 +190,114 @@ const cards = [
     `,
   },
   {
+    title: "Community Guidelines",
+    description: "What we value, how to visit, and how to become part of the community",
+    image: "/community.webp",
+    detailedContent: `
+      <h3 class="font-semibold mb-2">What We're About</h3>
+      <ul class="list-disc list-inside mb-4">
+        <li><strong>We ship:</strong> Actually building things and putting them out there. Show us what you're working on.</li>
+        <li><strong>We help:</strong> If you know something, share it. If you need help, ask. That's how we all get better.</li>
+        <li><strong>We vibe:</strong> Nobody's trying to one-up each other here. We're all just trying to build cool stuff.</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Demo Day Policy</h3>
+      <p class="mb-3">Every week we host demo days where anyone can come show what they're building.</p>
+      <ul class="list-disc list-inside mb-4">
+        <li>Open to everyone - bring your projects</li>
+        <li>Register at <a href="/register" class="text-blue-600 dark:text-blue-400 underline">500.house/register</a></li>
+        <li>We post events on Luma so check there for dates</li>
+        <li>Come ready to present what you're working on</li>
+        <li>Follow the dress code and house rules</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Guest Policy</h3>
+      <p class="mb-3">Want to bring someone? Here's how it works:</p>
+      <ul class="list-disc list-inside mb-4">
+        <li>Guests must be invited by a permanent resident</li>
+        <li>Register your guest in advance - no walk-ins</li>
+        <li>If you invite someone, you're responsible for them</li>
+        <li>Your guest should be building something real, not just hanging out</li>
+        <li>You need to be there with your guest - no dropping people off</li>
+        <li>Community leaders might need to approve depending on the situation</li>
+      </ul>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Dress Code</h3>
+      <p class="mb-3">We're in a bank building (AICB), so we need to dress accordingly. If we don't respect their dress code, we all lose access to this space.</p>
+
+      <div class="mb-4">
+        <p class="font-medium mb-2">What to wear:</p>
+        <ul class="list-disc list-inside mb-3">
+          <li>Closed-toe shoes</li>
+          <li>Pants or long skirts</li>
+          <li>Collared shirts or appropriate tops</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-medium mb-2 text-red-600 dark:text-red-400">What NOT to wear:</p>
+        <ul class="list-disc list-inside mb-3">
+          <li>Slippers, sandals, or flip-flops</li>
+          <li>Short shorts, miniskirts, or minidresses</li>
+          <li>Singlets, tank tops, or crop tops</li>
+        </ul>
+      </div>
+
+      <div class="my-4"><hr class="border-gray-200 dark:border-gray-700" /></div>
+
+      <h3 class="font-semibold mb-2">Pathway to AI Residency</h3>
+      <p class="mb-3">Want to be part of the community long-term? Here's the path:</p>
+
+      <div class="mb-4">
+        <p class="font-medium mb-2">Step 1: Come to demo days (at least 2 times)</p>
+        <ul class="list-disc list-inside mb-3">
+          <li>Show up and present what you're building</li>
+          <li>Talk to people, get involved in the community</li>
+          <li>Let people see you're serious about shipping</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-medium mb-2">Step 2: Apply for residency</p>
+        <ul class="list-disc list-inside mb-3">
+          <li>Fill out the application form</li>
+          <li>Show us your work (GitHub, portfolio, whatever you've built)</li>
+          <li>Tell us what you're working on and why</li>
+          <li>Get 1-2 existing residents to vouch for you</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-medium mb-2">Step 3: Trial period (1-2 months)</p>
+        <ul class="list-disc list-inside mb-3">
+          <li>You'll be invited to come work during the week</li>
+          <li>Keep shipping - we want to see consistent progress</li>
+          <li>Help other people when you can</li>
+          <li>Maybe run a workshop or share what you know</li>
+          <li>Follow the rules and respect the space</li>
+          <li>Community leaders will check if you're a good fit</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-medium mb-2">Step 4: Full residency</p>
+        <ul class="list-disc list-inside mb-4">
+          <li>Community leaders and residents vote on you</li>
+          <li>We're looking for: consistent building, helping others, good vibes, follows rules</li>
+          <li>Get approved → you get door access</li>
+          <li>You can invite your own guests (within the policy above)</li>
+          <li>We'll check in every few months to make sure you're still active</li>
+        </ul>
+      </div>
+    `,
+  },
+  {
     title: "Housekeeping Guidelines",
     description:
       "Office policies, WiFi access, workspace etiquette, and facility guidelines",

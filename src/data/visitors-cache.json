@@ -224,38 +224,10 @@
         "vehicleNumber": "",
         "reasonForVisit": "",
         "approvedBy": ""
-      },
-      {
-        "name": "Sean Tey",
-        "photo": "",
-        "company": "500 Social House",
-        "site": "Kuala Lumpur, Malaysia",
-        "visitFrom": "25 Sep 2025 - 04:00 PM",
-        "visitTill": "26 Sep 2025 - 06:59 AM",
-        "visitorType": "",
-        "credential": "660055191504",
-        "invitedBy": "",
-        "vehicleNumber": "",
-        "reasonForVisit": "AI Demo Day_Lynnette",
-        "approvedBy": "Adelyn Chan"
-      },
-      {
-        "name": "Faw Testing",
-        "photo": "",
-        "company": "500 Social House",
-        "site": "Kuala Lumpur, Malaysia",
-        "visitFrom": "26 Sep 2025 - 01:00 AM",
-        "visitTill": "26 Sep 2025 - 03:59 PM",
-        "visitorType": "",
-        "credential": "656400736961",
-        "invitedBy": "",
-        "vehicleNumber": "",
-        "reasonForVisit": "Co-working @ 500 Social House",
-        "approvedBy": "Faw"
       }
     ],
-    "timestamp": "2025-09-26T06:00:47.698Z",
-    "count": 18
+    "timestamp": "2025-10-10T07:23:15.325Z",
+    "count": 16
   },
   "future": {
     "visitors": [
@@ -484,13 +456,28 @@
         "approvedBy": ""
       }
     ],
-    "timestamp": "2025-09-26T06:01:04.198Z",
+    "timestamp": "2025-10-10T07:23:34.566Z",
     "count": 16
   },
   "pending": {
-    "visitors": [],
-    "timestamp": "2025-09-26T06:01:21.711Z",
-    "count": 0
+    "visitors": [
+      {
+        "name": "Nattanont Inthasaro",
+        "photo": "",
+        "company": "Aura Movement Technology, Inc",
+        "site": "Kuala Lumpur, Malaysia",
+        "visitFrom": "10 Oct 2025 - 01:00 AM",
+        "visitTill": "10 Oct 2025 - 03:59 PM",
+        "visitorType": "",
+        "credential": "176703767437",
+        "invitedBy": "",
+        "vehicleNumber": "None",
+        "reasonForVisit": "Co-working @ 500 Social House_Faw",
+        "approvedBy": ""
+      }
+    ],
+    "timestamp": "2025-10-10T07:23:52.351Z",
+    "count": 1
   },
-  "lastSync": "2025-09-26T06:01:21.715Z"
+  "lastSync": "2025-10-10T07:23:52.354Z"
 }

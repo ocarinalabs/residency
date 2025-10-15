@@ -2,6 +2,9 @@
 
 import { AnimatedNavFramer } from "@/components/ui/navigation-bar-animation";
 import { Hero } from "@/components/ui/hero";
+import { OurResidents } from "@/components/ui/our-residents";
+import { WhatToExpect } from "@/components/ui/what-to-expect";
+import { CTABanner } from "@/components/ui/cta-banner";
 import { BGPattern } from "@/components/ui/bg-pattern";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -37,12 +40,19 @@ export default function Home() {
       />
       <AnimatedNavFramer />
       <Hero
-        heading="The 500 Social House"
-        description="A collaborative space for AI residents and founders"
+        eyebrow="the 500 social house"
+        heading="build and ship with ai builders"
         buttons={{
-          primary: { text: "Register", url: "/register" },
-          secondary: { text: "Guide", url: "/guide" },
+          primary: { text: "lock in", url: "/register" },
         }}
+      />
+      <OurResidents />
+      <WhatToExpect />
+      <CTABanner
+        heading="join us now"
+        description="malaysia's first ai residency. where it all starts."
+        buttonText="lock in"
+        buttonUrl="/register"
       />
     </main>
   );

@@ -48,19 +48,28 @@ export default function RegisterPage() {
         <div className="container mx-auto px-4">
           <BlurFade delay={0}>
             <Link href="/" className="inline-block mb-6">
-              <Button variant="ghost" size="sm" className="gap-2">
+              <Button variant="ghost" size="sm" className="gap-2 font-mono">
                 <ArrowLeft className="h-4 w-4" />
-                Back
+                back
               </Button>
             </Link>
           </BlurFade>
 
           <BlurFade delay={0.05}>
             <div className="text-center max-w-2xl mx-auto mb-8">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-                Visitor Registration
+              <h1 className="font-nineties text-4xl sm:text-5xl md:text-6xl">
+                visitor registration
               </h1>
             </div>
+          </BlurFade>
+        </div>
+      </section>
+
+      {/* Registration Form Section */}
+      <section className="relative w-full pb-8">
+        <div className="container mx-auto px-4">
+          <BlurFade delay={0.08}>
+            <VisitorRegistrationForm />
           </BlurFade>
         </div>
       </section>
@@ -68,19 +77,10 @@ export default function RegisterPage() {
       {/* Nuveq App Download Section */}
       <section className="relative w-full pb-8">
         <div className="container mx-auto px-4">
-          <BlurFade delay={0.08}>
+          <BlurFade delay={0.12}>
             <div className="max-w-md mx-auto">
               <NuveqAppDownload />
             </div>
-          </BlurFade>
-        </div>
-      </section>
-
-      {/* Registration Form Section */}
-      <section className="relative w-full pb-20">
-        <div className="container mx-auto px-4">
-          <BlurFade delay={0.12}>
-            <VisitorRegistrationForm />
           </BlurFade>
         </div>
       </section>
@@ -91,8 +91,8 @@ export default function RegisterPage() {
           <BlurFade delay={0.18}>
             <div className="text-center max-w-md mx-auto">
               <Link href="/guide">
-                <Button variant="outline" size="sm">
-                  View Office Guide
+                <Button variant="outline" size="sm" className="font-mono">
+                  view house guide
                 </Button>
               </Link>
             </div>

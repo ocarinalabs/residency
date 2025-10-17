@@ -1,5 +1,6 @@
 "use client";
 
+import { Authenticated } from "convex/react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { VisitorTable, type VisitorData } from "@/components/visitor-table";
@@ -78,163 +79,167 @@ export default function Page() {
   }, []);
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              {/* Visitor count and status */}
-              <div className="px-4 lg:px-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-2xl font-bold">Dashboard</h2>
-                    {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-                  </div>
-                  <div className="flex items-center gap-4">
-                    {lastSync && (
-                      <div className="flex items-center gap-1 text-sm text-gray-500">
-                        <Clock className="h-4 w-4" />
-                        <span>
-                          Last sync:{" "}
-                          {formatDistanceToNow(new Date(lastSync), {
-                            addSuffix: true,
-                          })}
-                        </span>
-                      </div>
-                    )}
-                    <Button
-                      onClick={syncFromNuveq}
-                      disabled={isSyncing}
-                      variant="outline"
-                      size="sm"
-                    >
-                      {isSyncing ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Syncing...
-                        </>
-                      ) : (
-                        <>
-                          <RefreshCw className="mr-2 h-4 w-4" />
-                          Refresh from Nuveq
-                        </>
+    <Authenticated>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                {/* Visitor count and status */}
+                <div className="px-4 lg:px-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-2xl font-bold">Dashboard</h2>
+                      {isLoading && (
+                        <Loader2 className="h-4 w-4 animate-spin" />
                       )}
-                    </Button>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      {lastSync && (
+                        <div className="flex items-center gap-1 text-sm text-gray-500">
+                          <Clock className="h-4 w-4" />
+                          <span>
+                            Last sync:{" "}
+                            {formatDistanceToNow(new Date(lastSync), {
+                              addSuffix: true,
+                            })}
+                          </span>
+                        </div>
+                      )}
+                      <Button
+                        onClick={syncFromNuveq}
+                        disabled={isSyncing}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {isSyncing ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Syncing...
+                          </>
+                        ) : (
+                          <>
+                            <RefreshCw className="mr-2 h-4 w-4" />
+                            Refresh from Nuveq
+                          </>
+                        )}
+                      </Button>
+                    </div>
                   </div>
+                  {error && (
+                    <div className="bg-red-50 text-red-700 p-3 rounded-md mb-4">
+                      {error}
+                    </div>
+                  )}
                 </div>
-                {error && (
-                  <div className="bg-red-50 text-red-700 p-3 rounded-md mb-4">
-                    {error}
-                  </div>
-                )}
-              </div>
 
-              <SectionCards
-                todayVisitors={todayVisitors.length}
-                pendingApprovals={pendingVisitors.length}
-                futureVisitors={futureVisitors.length}
-                roomsOccupied={0}
-              />
-              <div className="px-4 lg:px-6">
-                <ChartAreaInteractive />
-              </div>
+                <SectionCards
+                  todayVisitors={todayVisitors.length}
+                  pendingApprovals={pendingVisitors.length}
+                  futureVisitors={futureVisitors.length}
+                  roomsOccupied={0}
+                />
+                <div className="px-4 lg:px-6">
+                  <ChartAreaInteractive />
+                </div>
 
-              {/* Tabs for different visitor views */}
-              <div className="px-4 lg:px-6">
-                <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="today">
-                      Today ({todayVisitors.length})
-                    </TabsTrigger>
-                    <TabsTrigger value="pending">
-                      Pending ({pendingVisitors.length})
-                    </TabsTrigger>
-                    <TabsTrigger value="future">
-                      Future ({futureVisitors.length})
-                    </TabsTrigger>
-                  </TabsList>
+                {/* Tabs for different visitor views */}
+                <div className="px-4 lg:px-6">
+                  <Tabs value={activeTab} onValueChange={setActiveTab}>
+                    <TabsList className="grid w-full grid-cols-3">
+                      <TabsTrigger value="today">
+                        Today ({todayVisitors.length})
+                      </TabsTrigger>
+                      <TabsTrigger value="pending">
+                        Pending ({pendingVisitors.length})
+                      </TabsTrigger>
+                      <TabsTrigger value="future">
+                        Future ({futureVisitors.length})
+                      </TabsTrigger>
+                    </TabsList>
 
-                  <TabsContent value="today">
-                    <VisitorTable
-                      data={todayVisitors.map(
-                        (visitor, index) =>
-                          ({
-                            id: index + 1,
-                            name: visitor.name,
-                            company: visitor.company,
-                            visitFrom: visitor.visitFrom,
-                            visitTill: visitor.visitTill,
-                            invitedBy: visitor.invitedBy,
-                            site: visitor.site,
-                            visitorType: visitor.visitorType,
-                            credential: visitor.credential,
-                            vehicleNumber: visitor.vehicleNumber,
-                            reasonForVisit: visitor.reasonForVisit,
-                            approvedBy: visitor.approvedBy,
-                          }) as VisitorData
-                      )}
-                    />
-                  </TabsContent>
+                    <TabsContent value="today">
+                      <VisitorTable
+                        data={todayVisitors.map(
+                          (visitor, index) =>
+                            ({
+                              id: index + 1,
+                              name: visitor.name,
+                              company: visitor.company,
+                              visitFrom: visitor.visitFrom,
+                              visitTill: visitor.visitTill,
+                              invitedBy: visitor.invitedBy,
+                              site: visitor.site,
+                              visitorType: visitor.visitorType,
+                              credential: visitor.credential,
+                              vehicleNumber: visitor.vehicleNumber,
+                              reasonForVisit: visitor.reasonForVisit,
+                              approvedBy: visitor.approvedBy,
+                            }) as VisitorData
+                        )}
+                      />
+                    </TabsContent>
 
-                  <TabsContent value="pending">
-                    <VisitorTable
-                      data={pendingVisitors.map(
-                        (visitor, index) =>
-                          ({
-                            id: index + 1,
-                            name: visitor.name,
-                            company: visitor.company,
-                            visitFrom: visitor.visitFrom,
-                            visitTill: visitor.visitTill,
-                            invitedBy: visitor.invitedBy,
-                            site: visitor.site,
-                            visitorType: visitor.visitorType,
-                            credential: visitor.credential,
-                            vehicleNumber: visitor.vehicleNumber,
-                            reasonForVisit: visitor.reasonForVisit,
-                            approvedBy: visitor.approvedBy,
-                          }) as VisitorData
-                      )}
-                      showPending={true}
-                    />
-                  </TabsContent>
+                    <TabsContent value="pending">
+                      <VisitorTable
+                        data={pendingVisitors.map(
+                          (visitor, index) =>
+                            ({
+                              id: index + 1,
+                              name: visitor.name,
+                              company: visitor.company,
+                              visitFrom: visitor.visitFrom,
+                              visitTill: visitor.visitTill,
+                              invitedBy: visitor.invitedBy,
+                              site: visitor.site,
+                              visitorType: visitor.visitorType,
+                              credential: visitor.credential,
+                              vehicleNumber: visitor.vehicleNumber,
+                              reasonForVisit: visitor.reasonForVisit,
+                              approvedBy: visitor.approvedBy,
+                            }) as VisitorData
+                        )}
+                        showPending={true}
+                      />
+                    </TabsContent>
 
-                  <TabsContent value="future">
-                    <VisitorTable
-                      data={futureVisitors.map(
-                        (visitor, index) =>
-                          ({
-                            id: index + 1,
-                            name: visitor.name,
-                            company: visitor.company,
-                            visitFrom: visitor.visitFrom,
-                            visitTill: visitor.visitTill,
-                            invitedBy: visitor.invitedBy,
-                            site: visitor.site,
-                            visitorType: visitor.visitorType,
-                            credential: visitor.credential,
-                            vehicleNumber: visitor.vehicleNumber,
-                            reasonForVisit: visitor.reasonForVisit,
-                            approvedBy: visitor.approvedBy,
-                          }) as VisitorData
-                      )}
-                    />
-                  </TabsContent>
-                </Tabs>
+                    <TabsContent value="future">
+                      <VisitorTable
+                        data={futureVisitors.map(
+                          (visitor, index) =>
+                            ({
+                              id: index + 1,
+                              name: visitor.name,
+                              company: visitor.company,
+                              visitFrom: visitor.visitFrom,
+                              visitTill: visitor.visitTill,
+                              invitedBy: visitor.invitedBy,
+                              site: visitor.site,
+                              visitorType: visitor.visitorType,
+                              credential: visitor.credential,
+                              vehicleNumber: visitor.vehicleNumber,
+                              reasonForVisit: visitor.reasonForVisit,
+                              approvedBy: visitor.approvedBy,
+                            }) as VisitorData
+                        )}
+                      />
+                    </TabsContent>
+                  </Tabs>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+    </Authenticated>
   );
 }

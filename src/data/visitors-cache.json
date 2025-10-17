@@ -224,10 +224,38 @@
         "vehicleNumber": "",
         "reasonForVisit": "",
         "approvedBy": ""
+      },
+      {
+        "name": "(Timi) Ileladewa Oluuwatimilehin Adekunle",
+        "photo": "",
+        "company": "500 Social House",
+        "site": "Kuala Lumpur, Malaysia",
+        "visitFrom": "15 Oct 2025 - 07:30 AM",
+        "visitTill": "17 Oct 2025 - 02:30 PM",
+        "visitorType": "",
+        "credential": "198468237280",
+        "invitedBy": "",
+        "vehicleNumber": "",
+        "reasonForVisit": "",
+        "approvedBy": ""
+      },
+      {
+        "name": "Henry Chen",
+        "photo": "",
+        "company": "500 Social House",
+        "site": "Kuala Lumpur, Malaysia",
+        "visitFrom": "17 Oct 2025 - 07:00 AM",
+        "visitTill": "17 Oct 2025 - 03:59 PM",
+        "visitorType": "",
+        "credential": "510776395769",
+        "invitedBy": "",
+        "vehicleNumber": "",
+        "reasonForVisit": "Co-working @ 500 Social House_Timi",
+        "approvedBy": "Adelyn Chan"
       }
     ],
-    "timestamp": "2025-10-10T07:23:15.325Z",
-    "count": 16
+    "timestamp": "2025-10-17T13:54:07.560Z",
+    "count": 18
   },
   "future": {
     "visitors": [
@@ -456,28 +484,13 @@
         "approvedBy": ""
       }
     ],
-    "timestamp": "2025-10-10T07:23:34.566Z",
+    "timestamp": "2025-10-17T13:54:25.294Z",
     "count": 16
   },
   "pending": {
-    "visitors": [
-      {
-        "name": "Nattanont Inthasaro",
-        "photo": "",
-        "company": "Aura Movement Technology, Inc",
-        "site": "Kuala Lumpur, Malaysia",
-        "visitFrom": "10 Oct 2025 - 01:00 AM",
-        "visitTill": "10 Oct 2025 - 03:59 PM",
-        "visitorType": "",
-        "credential": "176703767437",
-        "invitedBy": "",
-        "vehicleNumber": "None",
-        "reasonForVisit": "Co-working @ 500 Social House_Faw",
-        "approvedBy": ""
-      }
-    ],
-    "timestamp": "2025-10-10T07:23:52.351Z",
-    "count": 1
+    "visitors": [],
+    "timestamp": "2025-10-17T13:54:42.556Z",
+    "count": 0
   },
-  "lastSync": "2025-10-10T07:23:52.354Z"
+  "lastSync": "2025-10-17T13:54:42.563Z"
 }

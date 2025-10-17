@@ -37,7 +37,7 @@ const CTABanner = ({
 
           {/* Content */}
           <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 leading-tight">
+            <h2 className="font-nineties text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
               {heading}
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mb-8">
@@ -47,7 +47,7 @@ const CTABanner = ({
               <Button
                 asChild
                 size="lg"
-                className="bg-white text-black hover:bg-white/90 font-sans"
+                className="bg-white text-black hover:bg-white/90 font-mono"
               >
                 <a href={buttonUrl}>{buttonText}</a>
               </Button>

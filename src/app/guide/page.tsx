@@ -19,12 +19,31 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+// Animation variants for staggered card entrance
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
 
 const cards = [
   {
-    title: "Getting Here",
-    description:
-      "Building address, transportation options, and contact information",
+    title: "getting here",
+    description: "location, trains, parking, and drop-off",
     image: "/aicb.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">Location</h3>
@@ -162,8 +181,8 @@ const cards = [
     `,
   },
   {
-    title: "Access & Registration",
-    description: "AICB Building access and door system registration process.",
+    title: "getting in",
+    description: "lobby registration and door access",
     image: "/access.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">AICB Building Access (North Lobby)</h3>
@@ -190,8 +209,8 @@ const cards = [
     `,
   },
   {
-    title: "Community Guidelines",
-    description: "What we value, how to visit, and how to become part of the community",
+    title: "how we roll",
+    description: "guidelines, demo days, guests, and residency",
     image: "/community.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">What We're About</h3>
@@ -298,9 +317,8 @@ const cards = [
     `,
   },
   {
-    title: "Housekeeping Guidelines",
-    description:
-      "Office policies, WiFi access, workspace etiquette, and facility guidelines",
+    title: "housekeeping",
+    description: "wifi, hours, pantry, and cleaning",
     image: "/housekeeping.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">Office Support</h3>
@@ -425,8 +443,8 @@ const cards = [
     `,
   },
   {
-    title: "Workspace Layout",
-    description: "Coworking spaces, common areas, and bookable meeting rooms",
+    title: "the space",
+    description: "desks, common areas, and meeting rooms",
     image: "/workspace.webp",
     detailedContent: `
       <div class="mb-4 flex justify-center">
@@ -537,72 +555,8 @@ const cards = [
     `,
   },
   {
-    title: "Visitor Registration and Booking",
-    description:
-      "Visitor registration and meeting room booking via Google Calendar.",
-    image:
-      "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop",
-    detailedContent: `
-      <h3 class="font-semibold mb-2">Visitor Registration Process</h3>
-
-      <div class="mb-4">
-        <p class="font-medium mb-2">For 500 Team Member's Visitors:</p>
-        <ul class="list-disc list-inside mb-3">
-          <li>Fill up 500 Social House Visitor Registration form</li>
-          <li>Submit at least 2 working days before meeting</li>
-          <li>Book meeting room via Google Calendar</li>
-          <li>500 team members must accompany their visitors</li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <p class="font-medium mb-2">For Portfolio Companies:</p>
-        <ul class="list-disc list-inside mb-3">
-          <li>Submit 500 Social House Visitor Registration form</li>
-          <li>At least 2 working days notice required</li>
-          <li>Meeting room requests subject to availability</li>
-          <li>Only for 500's investment-related activities</li>
-        </ul>
-      </div>
-
-      <h3 class="font-semibold mb-2">What Happens Next?</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Information added to the system by Office Manager</li>
-        <li>Individual access links sent via email/WhatsApp</li>
-        <li>Access link sent via email (check SPAM folder)</li>
-        <li>VIPs handled by GP/Partner's Executive Assistant</li>
-        <li>AICB Building registration required at North Tower Lobby</li>
-      </ul>
-
-      <h3 class="font-semibold mb-2">Meeting Room Booking via Google Calendar</h3>
-
-      <div class="mb-4">
-        <p class="font-medium mb-2">How to Add Room Calendars:</p>
-        <ol class="list-decimal list-inside mb-3">
-          <li>Search "Other Calendar" and click "+" to add</li>
-          <li>Browse Resources</li>
-          <li>Click on "500 Social House"</li>
-          <li>Tick to select all rooms to add to your calendar</li>
-          <li>Use preview icon to view room availability</li>
-        </ol>
-      </div>
-
-      <div class="mb-4">
-        <p class="font-medium mb-2">How to Book a Room:</p>
-        <ol class="list-decimal list-inside mb-3">
-          <li>Create a new event</li>
-          <li>Click "add room or location"</li>
-          <li>Browse and select your preferred room</li>
-          <li>Check availability for your date/time</li>
-          <li>Confirm booking</li>
-        </ol>
-      </div>
-    `,
-  },
-  {
-    title: "Emergency Response Plan",
-    description:
-      "Fire drill procedures, evacuation routes, and safety protocols.",
+    title: "safety first",
+    description: "fire drills, exits, and emergencies",
     image: "/evacuation.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">Fire Drill Announcement Procedures</h3>
@@ -649,9 +603,8 @@ const cards = [
     `,
   },
   {
-    title: "AICB Building Amenities",
-    description:
-      "Building facilities, library access, and wellness activities.",
+    title: "building amenities",
+    description: "library, cafe, prayer room, and facilities",
     image: "/building.webp",
     detailedContent: `
       <div class="mb-4 flex justify-center">
@@ -674,8 +627,8 @@ const cards = [
     `,
   },
   {
-    title: "Where to Eat",
-    description: "Cafes, restaurants, and food delivery options nearby",
+    title: "where to eat",
+    description: "cafes, food courts, and delivery",
     image: "/eat.webp",
     detailedContent: `
       <h3 class="font-semibold mb-2">In AICB Building</h3>
@@ -781,20 +734,20 @@ export default function GuidePage() {
         <div className="container mx-auto px-4">
           <BlurFade delay={0}>
             <Link href="/" className="inline-block mb-6">
-              <Button variant="ghost" size="sm" className="gap-2">
+              <Button variant="ghost" size="sm" className="gap-2 font-mono">
                 <ArrowLeft className="h-4 w-4" />
-                Back
+                back
               </Button>
             </Link>
           </BlurFade>
 
           <BlurFade delay={0.05}>
             <div className="text-center max-w-2xl mx-auto mb-4">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-                House Guide
+              <h1 className="font-nineties text-4xl sm:text-5xl md:text-6xl mb-4">
+                our house
               </h1>
               <p className="text-muted-foreground text-lg">
-                Everything you need to know about 500 Social House
+                how to use the space
               </p>
             </div>
           </BlurFade>
@@ -806,80 +759,93 @@ export default function GuidePage() {
         <div className="container mx-auto px-4">
           <div className="w-full max-w-4xl mx-auto">
             <div className="min-h-[500px] p-4 flex flex-col justify-center rounded-lg space-y-4">
-              <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6"
+              >
                 {cards.map((card, index) => (
-                  <MorphingDialog
-                    key={index}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 24,
-                    }}
+                  <motion.div
+                    key={`card-${index}`}
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="h-full"
                   >
-                    <MorphingDialogTrigger
-                      style={{
-                        borderRadius: "4px",
+                    <MorphingDialog
+                      key={index}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 24,
                       }}
-                      className="border border-gray-200/60 bg-white dark:border-zinc-700/60 dark:bg-zinc-900"
                     >
-                      <div className="flex items-center space-x-3 p-3">
-                        <MorphingDialogImage
-                          src={card.image}
-                          alt={card.title}
-                          className="h-8 w-8 object-cover object-top"
-                          style={{
-                            borderRadius: "4px",
-                          }}
-                        />
-                        <div className="flex flex-col items-start justify-center space-y-0 flex-1">
-                          <MorphingDialogTitle className="text-[10px] font-medium text-gray-900 dark:text-gray-100 sm:text-xs text-left">
-                            {card.title}
-                          </MorphingDialogTitle>
-                          <MorphingDialogSubtitle className="text-[10px] text-gray-600 dark:text-gray-400 sm:text-xs text-left">
-                            {card.description}
-                          </MorphingDialogSubtitle>
-                        </div>
-                      </div>
-                    </MorphingDialogTrigger>
-                    <MorphingDialogContainer>
-                      <MorphingDialogContent
+                      <MorphingDialogTrigger
                         style={{
-                          borderRadius: "12px",
+                          borderRadius: "4px",
                         }}
-                        className="relative h-auto w-[500px] border border-gray-100 bg-white dark:border-zinc-700 dark:bg-zinc-900"
+                        className="border border-gray-200/60 bg-white dark:border-zinc-700/60 dark:bg-zinc-900 h-full w-full"
                       >
-                        <ScrollArea className="h-[90vh]" type="scroll">
-                          <div className="relative p-6">
-                            <div className="flex justify-center py-10">
-                              <MorphingDialogImage
-                                src={card.image}
-                                alt={card.title}
-                                className="h-auto w-full max-w-[400px]"
-                              />
-                            </div>
-                            <div className="">
-                              <MorphingDialogTitle className="text-gray-900 dark:text-gray-100">
-                                {card.title}
-                              </MorphingDialogTitle>
-                              <MorphingDialogSubtitle className="font-light text-gray-400 dark:text-gray-500">
-                                {card.description}
-                              </MorphingDialogSubtitle>
-                              <div className="mt-4 text-sm text-gray-700 dark:text-gray-300">
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: card.detailedContent,
-                                  }}
+                        <div className="flex items-center space-x-3 p-3 h-full">
+                          <MorphingDialogImage
+                            src={card.image}
+                            alt={card.title}
+                            className="h-8 w-8 object-cover object-top"
+                            style={{
+                              borderRadius: "4px",
+                            }}
+                          />
+                          <div className="flex flex-col items-start justify-center space-y-0 flex-1">
+                            <MorphingDialogTitle className="font-nineties text-base font-medium text-gray-900 dark:text-gray-100 sm:text-lg text-left">
+                              {card.title}
+                            </MorphingDialogTitle>
+                            <MorphingDialogSubtitle className="text-[10px] text-gray-600 dark:text-gray-400 sm:text-xs text-left line-clamp-1">
+                              {card.description}
+                            </MorphingDialogSubtitle>
+                          </div>
+                        </div>
+                      </MorphingDialogTrigger>
+                      <MorphingDialogContainer>
+                        <MorphingDialogContent
+                          style={{
+                            borderRadius: "12px",
+                          }}
+                          className="relative h-auto w-[500px] border border-gray-100 bg-white dark:border-zinc-700 dark:bg-zinc-900"
+                        >
+                          <ScrollArea className="h-[90vh]" type="scroll">
+                            <div className="relative p-6">
+                              <div className="flex justify-center py-10">
+                                <MorphingDialogImage
+                                  src={card.image}
+                                  alt={card.title}
+                                  className="h-auto w-full max-w-[400px]"
                                 />
                               </div>
+                              <div className="">
+                                <MorphingDialogTitle className="font-nineties text-3xl sm:text-4xl text-gray-900 dark:text-gray-100">
+                                  {card.title}
+                                </MorphingDialogTitle>
+                                <MorphingDialogSubtitle className="font-light text-gray-400 dark:text-gray-500">
+                                  {card.description}
+                                </MorphingDialogSubtitle>
+                                <div className="mt-4 text-sm text-gray-700 dark:text-gray-300">
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html: card.detailedContent,
+                                    }}
+                                  />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </ScrollArea>
-                        <MorphingDialogClose className="text-zinc-500 dark:text-zinc-400" />
-                      </MorphingDialogContent>
-                    </MorphingDialogContainer>
-                  </MorphingDialog>
+                          </ScrollArea>
+                          <MorphingDialogClose className="text-zinc-500 dark:text-zinc-400" />
+                        </MorphingDialogContent>
+                      </MorphingDialogContainer>
+                    </MorphingDialog>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

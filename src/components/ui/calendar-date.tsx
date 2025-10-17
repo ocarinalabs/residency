@@ -24,6 +24,28 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
   const [startTime, setStartTime] = React.useState<string>("09:00");
   const [endTime] = React.useState<string>("23:59");
 
+  // Calculate days until next Thursday (demo day)
+  const getNextThursday = (): number => {
+    const today = new Date();
+    const currentDay = today.getDay(); // 0=Sunday, 4=Thursday
+    const thursday = 4;
+
+    // If today is Thursday, return today (0 days)
+    if (currentDay === thursday) {
+      return 0;
+    }
+
+    // Calculate days until next Thursday
+    let daysUntilThursday = thursday - currentDay;
+
+    // If we're past Thursday (Fri-Sat), get next week's Thursday
+    if (daysUntilThursday < 0) {
+      daysUntilThursday += 7;
+    }
+
+    return daysUntilThursday;
+  };
+
   // Helper function to check if a date matches the preset
   const isDateSelected = (presetDays: number): boolean => {
     if (!date) return false;
@@ -97,16 +119,16 @@ export function Calendar24({ onDateTimeChange }: Calendar24Props) {
         {/* Date presets */}
         <div className="flex gap-2">
           {[
-            { label: "Today", value: 0 },
-            { label: "Tomorrow", value: 1 },
-            { label: "In 2 days", value: 2 },
+            { label: "today", value: 0 },
+            { label: "tomorrow", value: 1 },
+            { label: "demo day", value: getNextThursday() },
           ].map((preset) => (
             <Button
-              key={preset.value}
+              key={preset.label}
               type="button"
               variant={isDateSelected(preset.value) ? "default" : "outline"}
               size="sm"
-              className="flex-1"
+              className="flex-1 font-mono"
               onClick={() => {
                 const newDate = addDays(new Date(), preset.value);
                 handleDateChange(newDate);

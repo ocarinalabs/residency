@@ -4,11 +4,11 @@ const ANIMATION_DELAY = 0.3;
 
 const WhatToExpect = () => {
   return (
-    <section className="w-full py-16 md:py-24 px-4">
+    <section className="w-full py-8 md:py-12 px-4">
       <div className="container mx-auto max-w-4xl">
         <BlurFade delay={ANIMATION_DELAY}>
           <div className="space-y-8">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-8 md:mb-12">
+            <h2 className="font-nineties text-4xl sm:text-5xl md:text-6xl mb-8 md:mb-12">
               what to <em>expect</em>
             </h2>
 

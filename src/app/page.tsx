@@ -2,6 +2,7 @@
 
 import { AnimatedNavFramer } from "@/components/ui/navigation-bar-animation";
 import { Hero } from "@/components/ui/hero";
+import { AboutResidency } from "@/components/ui/about-residency";
 import { OurResidents } from "@/components/ui/our-residents";
 import { WhatToExpect } from "@/components/ui/what-to-expect";
 import { CTABanner } from "@/components/ui/cta-banner";
@@ -41,13 +42,13 @@ export default function Home() {
       <AnimatedNavFramer />
       <Hero
         eyebrow="the 500 social house"
-        heading="build and ship with ai builders"
         buttons={{
           primary: { text: "lock in", url: "/register" },
         }}
       />
-      <OurResidents />
+      <AboutResidency />
       <WhatToExpect />
+      <OurResidents />
       <CTABanner
         heading="join us now"
         description="malaysia's first ai residency. where it all starts."

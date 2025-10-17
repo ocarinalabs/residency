@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import InfoCircle from "@/components/icons/info-circle";
 import Link from "next/link";
 import GetOnApple from "./get-on-apple";
 import GetOnGoogle from "./get-on-google";
@@ -23,14 +23,19 @@ export function NuveqAppDownload() {
     <Card className="mb-6 border max-w-2xl mx-auto bg-card rounded-none">
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
-          <AlertCircle className="h-5 w-5 text-muted-foreground" />
-          <CardTitle className="text-lg">For New Visitors</CardTitle>
+          <InfoCircle className="h-5 w-5 text-muted-foreground" />
+          <CardTitle className="font-nineties text-lg">
+            download nuveq for door access
+          </CardTitle>
         </div>
         <CardDescription className="mt-2">
-          If you&apos;re new to 500 Social House, download the Nuveq app to get
-          entry access. Already have a Nuveq account? Skip this step and proceed
-          to registration below. A Nuveq account is required to register as a
-          visitor.
+          Download the Nuveq app to access the door at 500 Social House.
+          <br />
+          <br />
+          <strong>
+            Important: Use the same email you registered with above when
+            creating your Nuveq account.
+          </strong>
         </CardDescription>
       </CardHeader>
       <CardContent>

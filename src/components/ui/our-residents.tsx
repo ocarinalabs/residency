@@ -5,7 +5,6 @@ import {
   DocuAsk,
   ResidentImages,
   StealthStartup,
-  NewellRoad,
   Robin,
 } from "@/components/icons/residents";
 
@@ -19,6 +18,7 @@ interface Resident {
   link: string;
   component?: React.ComponentType<{ className?: string }>;
   image?: string;
+  size?: string; // Custom size class for individual logos
 }
 
 const RESIDENTS: Resident[] = [
@@ -36,6 +36,7 @@ const RESIDENTS: Resident[] = [
     component: Robin,
     link: "https://robinbiz.com",
     name: "Robin",
+    size: "h-5 w-auto sm:h-6 md:h-8 max-w-[100px] object-contain",
   },
   {
     component: DocuAsk,
@@ -46,6 +47,7 @@ const RESIDENTS: Resident[] = [
     image: ResidentImages.bluebolt,
     link: "https://blueboltlabs.com",
     name: "Blue Bolt Labs",
+    size: "h-8 w-auto sm:h-10 md:h-12 max-w-[140px] object-contain",
   },
   {
     image: ResidentImages.easybuzz,
@@ -58,19 +60,18 @@ const RESIDENTS: Resident[] = [
     name: "Stealth Startup",
   },
   {
-    component: NewellRoad,
-    link: "https://newellroad.com",
-    name: "Newell Road",
+    link: "/register",
+    name: "You?",
   },
 ];
 
 const OurResidents = () => {
   return (
-    <section className="w-full py-16 md:py-24 px-4">
+    <section className="w-full py-8 md:py-12 px-4">
       <div className="container mx-auto max-w-6xl">
         <BlurFade delay={ANIMATION_DELAY}>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-center mb-12 md:mb-16">
-            our residents
+          <h2 className="font-nineties text-3xl sm:text-4xl md:text-5xl text-center mb-12 md:mb-16">
+            our <em>residents</em>
           </h2>
         </BlurFade>
 
@@ -90,19 +91,26 @@ const OurResidents = () => {
                 aria-label={resident.name}
               >
                 {resident.component ? (
-                  <resident.component className="h-8 w-auto sm:h-10 md:h-12" />
-                ) : (
+                  <resident.component
+                    className={
+                      resident.size ||
+                      "h-6 w-auto sm:h-8 md:h-10 max-w-[120px] object-contain"
+                    }
+                  />
+                ) : resident.image ? (
                   <img
                     src={resident.image}
                     alt={resident.name}
                     className={
-                      resident.name === "Blue Bolt Labs" ||
-                      resident.name === "EasyBuzz"
-                        ? "h-12 w-auto sm:h-14 md:h-16 object-contain"
-                        : "h-8 w-auto sm:h-10 md:h-12 object-contain"
+                      resident.size ||
+                      "h-6 w-auto sm:h-8 md:h-10 max-w-[120px] object-contain"
                     }
                     loading="lazy"
                   />
+                ) : (
+                  <span className="font-nineties text-2xl sm:text-3xl md:text-4xl italic">
+                    {resident.name}
+                  </span>
                 )}
               </a>
             </BlurFade>

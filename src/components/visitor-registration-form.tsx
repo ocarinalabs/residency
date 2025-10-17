@@ -227,8 +227,8 @@ export function VisitorRegistrationForm() {
         // Success state
         <div className="flex flex-col items-center justify-center py-8 space-y-4">
           <CheckCircle className="h-16 w-16 text-green-500" />
-          <h2 className="text-2xl font-bold text-center">
-            Registration Complete!
+          <h2 className="font-nineties text-2xl text-center">
+            registration complete!
           </h2>
           <p className="text-sm text-muted-foreground text-center px-4">
             Check your email for confirmation.
@@ -237,10 +237,6 @@ export function VisitorRegistrationForm() {
       ) : (
         // Form state
         <>
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-center">Visitor Access</h2>
-          </div>
-
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -457,9 +453,12 @@ export function VisitorRegistrationForm() {
                             target="_blank"
                             className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300"
                           >
-                            I agree to abide by the community and housekeeping guidelines
+                            I agree to abide by the community and housekeeping
+                            guidelines
                           </Link>
-                          <span className="text-red-500 align-top text-xs">*</span>
+                          <span className="text-red-500 align-top text-xs">
+                            *
+                          </span>
                         </FormLabel>
                         <FormMessage />
                       </div>
@@ -470,16 +469,16 @@ export function VisitorRegistrationForm() {
 
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full font-mono"
                 disabled={isLoading || !form.formState.isValid}
               >
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Registering...
+                    registering...
                   </>
                 ) : (
-                  "Register"
+                  "register"
                 )}
               </Button>
             </form>

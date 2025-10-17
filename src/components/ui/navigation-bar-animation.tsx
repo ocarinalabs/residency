@@ -10,20 +10,16 @@ import {
 import { cn } from "@/utils/cn";
 import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
-import Instagram from "@/components/icons/instagram";
-import WebIcon from "@/components/icons/web";
 
 // Navigation items
 const navItems = [
-  { name: "Register", href: "/register" },
-  { name: "Guide", href: "/guide" },
+  { name: "register", href: "/register" },
+  { name: "house", href: "/guide" },
+  {
+    name: "instagram",
+    href: "https://www.instagram.com/aitakeover.co/",
+    external: true,
+  },
 ];
 
 const EXPAND_SCROLL_THRESHOLD = 80;
@@ -159,6 +155,8 @@ export function AnimatedNavFramer() {
             <motion.a
               key={item.name}
               href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
               variants={itemVariants}
               onClick={(e) => e.stopPropagation()}
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-1 sm:px-2 py-1 font-sans"
@@ -166,40 +164,6 @@ export function AnimatedNavFramer() {
               {item.name}
             </motion.a>
           ))}
-          <motion.div variants={itemVariants}>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-1 sm:px-2 py-1 outline-none"
-              >
-                Socials <ChevronDown className="h-3 w-3" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem asChild>
-                  <a
-                    href="https://www.aitakeover.co"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center"
-                  >
-                    <WebIcon className="mr-2 h-4 w-4" />
-                    AI Takeover
-                  </a>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <a
-                    href="https://www.instagram.com/aitakeover.co/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center"
-                  >
-                    <Instagram className="mr-2 h-4 w-4" />
-                    Instagram
-                  </a>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </motion.div>
           <motion.a
             href="https://faw.dev"
             target="_blank"
@@ -208,7 +172,7 @@ export function AnimatedNavFramer() {
             onClick={(e) => e.stopPropagation()}
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-1 sm:px-2 py-1 font-sans"
           >
-            Faw
+            faw
           </motion.a>
           <motion.div variants={itemVariants}>
             <ModeToggle />

@@ -44,7 +44,9 @@ const WhoThisIsFor = () => {
             return (
               <BlurFade
                 key={audience.title}
-                delay={ANIMATION_DELAY_BASE + (index + 1) * ANIMATION_DELAY_INCREMENT}
+                delay={
+                  ANIMATION_DELAY_BASE + (index + 1) * ANIMATION_DELAY_INCREMENT
+                }
               >
                 <div className="flex flex-col items-center text-center">
                   <div className="mb-6 p-4 rounded-full bg-muted">

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import localFont from "next/font/local";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -17,6 +19,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Instrument Serif from Google Fonts
+const instrumentSerif = Instrument_Serif({
+  weight: ["400"],
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Perfectly Nineties font
+const perfectlyNineties = localFont({
+  src: "./fonts/perfectly-nineties-regular.otf",
+  weight: "100 900", // Allow all weights since it's a display font
+  variable: "--font-nineties",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "500 AI Residency - Visitor Registration",
   description:
@@ -29,25 +47,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark overflow-x-hidden" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
+    <ClerkProvider>
+      <html
+        lang="en"
+        className="dark overflow-x-hidden"
+        suppressHydrationWarning
       >
-        <ConvexClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <TooltipProvider>
-              {children}
-              <Toaster />
-            </TooltipProvider>
-          </ThemeProvider>
-        </ConvexClientProvider>
-        <Analytics />
-      </body>
-    </html>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${perfectlyNineties.variable} antialiased overflow-x-hidden`}
+        >
+          <ConvexClientProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <TooltipProvider>
+                {children}
+                <Toaster />
+              </TooltipProvider>
+            </ThemeProvider>
+          </ConvexClientProvider>
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

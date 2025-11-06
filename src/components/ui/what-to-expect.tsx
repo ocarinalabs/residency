@@ -13,7 +13,7 @@ const WhatToExpect = () => {
             </h2>
 
             <p className="text-lg md:text-xl leading-relaxed">
-              use demo day to prove your skills to potential collaborators,
+              ability to showcase your skills to potential collaborators,
               employees, builders and others.
             </p>
 
@@ -23,7 +23,7 @@ const WhatToExpect = () => {
             </p>
 
             <p className="text-lg md:text-xl leading-relaxed">
-              connect with people who will 10x your trajectory through intros
+              connect with people who can help propel your trajectory through intros
               and real conversations - no formal programs, just builders helping
               builders.
             </p>

@@ -19,7 +19,7 @@ const AboutResidency = () => {
 
             <p className="text-lg md:text-xl leading-relaxed">
               Based at the 500 Social House, we offer premium co-working space
-              to work with equally ambitious peers who are looking to ship AI products that{" "}
+              to work with equally ambitious peers who aim to ship AI products that{" "}
               <em>matter</em>.
             </p>
 
@@ -31,7 +31,7 @@ const AboutResidency = () => {
 
             <p className="text-lg md:text-xl leading-relaxed">
               Share wins, debug together, create content, and build in public
-              alongside hackers and founders who are looking to reshape Malaysia&apos;s
+              alongside hackers and founders who aim to reshape Southeast Asia&apos;s
               tech landscape with <em>AI</em>.
             </p>
 

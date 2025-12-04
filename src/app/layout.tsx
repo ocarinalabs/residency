@@ -36,9 +36,8 @@ const perfectlyNineties = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "500 AI Residency - Visitor Registration",
-  description:
-    "Quick and secure visitor registration for 500 AI Residency. Register for your digital visitor pass.",
+  title: "500 AI Residency",
+  description: "Ship daily. Scale infinitely. At the residency.",
 };
 
 export default function RootLayout({

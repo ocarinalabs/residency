@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@ark-ui/react": "^5.30.0",
-    "@hookform/resolvers": "3.3.4",
+    "@hookform/resolvers": "^3.9.1",
     "@residence/ui": "workspace:*",
     "@vercel/analytics": "^1.6.1",
     "clsx": "^2.1.1",

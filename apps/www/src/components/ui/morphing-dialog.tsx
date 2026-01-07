@@ -184,13 +184,17 @@ function MorphingDialogContent({
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-hidden");
-      const focusableElements = containerRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusableElements && focusableElements.length > 0) {
-        setFirstFocusableElement(focusableElements[0] as HTMLElement);
-        setLastFocusableElement(focusableElements.at(-1) as HTMLElement);
-        (focusableElements[0] as HTMLElement).focus();
+      const focusableElements = [
+        ...(containerRef.current?.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        ) ?? []),
+      ] as HTMLElement[];
+      const first = focusableElements[0];
+      const last = focusableElements.at(-1);
+      if (first && last) {
+        setFirstFocusableElement(first);
+        setLastFocusableElement(last);
+        first.focus();
       }
     } else {
       document.body.classList.remove("overflow-hidden");

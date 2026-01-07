@@ -1,0 +1,14 @@
+{
+  "extends": "@residence/typescript-config/react-library.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strictNullChecks": true,
+    "paths": {
+      "@residence/ui/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
